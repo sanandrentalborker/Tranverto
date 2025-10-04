@@ -1,4 +1,4 @@
 Flask
 gunicorn
-cloudconvert
+cloudconvert==2.2.0
 requests
