@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file
 import io
 import os
 import requests 
-from cloudconvert import CloudConvert 
+from cloudconvert.client import CloudConvert # <-- यह लाइन अपडेट की गई है।
 
 # Environment Variables से API Key प्राप्त करें
 # Render पर इन्हें Environment Tab में सेट किया गया है
@@ -249,3 +249,4 @@ def image_to_pdf_final():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
+
