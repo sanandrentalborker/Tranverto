@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file
 import io
 import os
 import requests 
-from cloudconvert import Client # <-- FIX: top-level import का उपयोग किया गया
+import cloudconvert # <-- FIX: named import को हटाकर full package import किया गया
 
 # Environment Variables से API Key प्राप्त करें
 # Render पर इन्हें Environment Tab में सेट किया गया है
@@ -13,7 +13,8 @@ if not CLOUDCONVERT_API_KEY:
     print("WARNING: CLOUDCONVERT_API_KEY environment variable is NOT set. Conversions will fail.")
 
 # CloudConvert SDK को API Key के साथ इनिशियलाइज़ करें
-cloudconvert_api = Client(api_key=CLOUDCONVERT_API_KEY) # क्लास का नाम 'Client' ही रहेगा
+# FIX: अब Client को cloudconvert.Client के रूप में एक्सेस किया गया है।
+cloudconvert_api = cloudconvert.Client(api_key=CLOUDCONVERT_API_KEY)
 
 
 # Flask App शुरू करें
