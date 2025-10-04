@@ -3,9 +3,9 @@ from docx import Document
 import io
 import os
 
-# Flask App शुरू करें
-# static_folder='static' और template_folder='templates' का मतलब है कि Flask को फ़ाइलें कहाँ ढूँढनी हैं।
-app = Flask(__name__, static_folder='static', template_folder='templates')
+# Render पर फ़ाइल पाथ एरर फिक्स करने के लिए 'static_folder' और 'template_folder' सेट करें
+# 'static_folder' को '.' पर सेट करें क्योंकि हमने CSS/Logo को रूट में रखा है
+app = Flask(__name__, static_folder='.', template_folder='templates')
 
 # Homepage रूट (रास्ता)
 @app.route('/')
@@ -49,4 +49,5 @@ def pdf_to_word():
 
 # सर्वर को पोर्ट 5000 पर चलाएँ
 if __name__ == '__main__':
+
     app.run(debug=True, host='0.0.0.0', port=5000)
