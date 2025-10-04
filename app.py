@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file
 import io
 import os
 import requests 
-from cloudconvert import CloudConvert # CloudConvert client को सही तरीके से import किया गया है
+from cloudconvert import Api # <-- 'CloudConvert' को 'Api' में बदला गया
 
 # Environment Variables से API Key प्राप्त करें
 # Render पर इन्हें Environment Tab में सेट किया गया है
@@ -13,7 +13,7 @@ if not CLOUDCONVERT_API_KEY:
     print("WARNING: CLOUDCONVERT_API_KEY environment variable is NOT set. Conversions will fail.")
 
 # CloudConvert SDK को API Key के साथ इनिशियलाइज़ करें
-cloudconvert_api = CloudConvert(api_key=CLOUDCONVERT_API_KEY)
+cloudconvert_api = Api(api_key=CLOUDCONVERT_API_KEY) # <-- 'CloudConvert' को 'Api' में बदला गया
 
 
 # Flask App शुरू करें
@@ -117,7 +117,7 @@ def word_to_pdf():
     """DOCX/DOC को PDF में कन्वर्ट करता है।"""
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith(('.docx', '.doc')):
-        return "कृपया एक DOCX/DOC फाइल सिलेक्ट करें", 400
+        return " कृपया एक DOCX/DOC फाइल सिलेक्ट करें", 400
     
     return convert_file_cloudconvert(
         file.stream, 
