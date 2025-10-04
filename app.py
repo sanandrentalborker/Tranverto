@@ -3,9 +3,11 @@ from docx import Document
 import io
 import os
 
-# Render पर फ़ाइल पाथ एरर फिक्स करने के लिए 'static_folder' और 'template_folder' सेट करें
-# 'static_folder' को '.' पर सेट करें क्योंकि हमने CSS/Logo को रूट में रखा है
-app = Flask(__name__, static_folder='.', template_folder='templates')
+# Flask App शुरू करें
+# Render पर CSS/Logo पाथ की समस्या को हल करने के लिए, हम static_url_path सेट करते हैं।
+# Render पर 'templates' फ़ोल्डर को ठीक से पहचानने के लिए template_folder सेट है।
+app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
+
 
 # Homepage रूट (रास्ता)
 @app.route('/')
@@ -17,6 +19,7 @@ def home():
 @app.route('/pdf-to-word', methods=['POST'])
 def pdf_to_word():
     if 'file' not in request.files:
+        # यह अभी सिर्फ एक प्लेसहोल्डर है। असली काम हम अगले चरण में API से करेंगे।
         return "कोई फाइल नहीं मिली", 400
     
     file = request.files['file']
@@ -47,7 +50,7 @@ def pdf_to_word():
             download_name='Tranverto_Converted_File.docx'
         )
 
-# सर्वर को पोर्ट 5000 पर चलाएँ
+# यह Render पर नहीं चलेगा (क्योंकि हम gunicorn का उपयोग कर रहे हैं), लेकिन लोकल टेस्टिंग के लिए ज़रूरी है।
 if __name__ == '__main__':
-
+    # लोकल मशीन के लिए पोर्ट 5000 का उपयोग करें
     app.run(debug=True, host='0.0.0.0', port=5000)
