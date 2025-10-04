@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file
 import io
 import os
 import requests 
-from cloudconvert.client import CloudConvert # <-- यह लाइन अपडेट की गई है।
+from cloudconvert import CloudConvert # CloudConvert client को सही तरीके से import किया गया है
 
 # Environment Variables से API Key प्राप्त करें
 # Render पर इन्हें Environment Tab में सेट किया गया है
