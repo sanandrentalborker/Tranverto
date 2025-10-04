@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file
 import io
 import os
 import requests 
-from cloudconvert.client import Client # <-- Fix: क्लाइंट को submodule से इंपोर्ट किया गया
+from cloudconvert import Client # <-- FIX: top-level import का उपयोग किया गया
 
 # Environment Variables से API Key प्राप्त करें
 # Render पर इन्हें Environment Tab में सेट किया गया है
@@ -13,7 +13,7 @@ if not CLOUDCONVERT_API_KEY:
     print("WARNING: CLOUDCONVERT_API_KEY environment variable is NOT set. Conversions will fail.")
 
 # CloudConvert SDK को API Key के साथ इनिशियलाइज़ करें
-cloudconvert_api = Client(api_key=CLOUDCONVERT_API_KEY) # <-- 'Api' को 'Client' में बदला गया (Initialization Fix)
+cloudconvert_api = Client(api_key=CLOUDCONVERT_API_KEY) # क्लास का नाम 'Client' ही रहेगा
 
 
 # Flask App शुरू करें
@@ -133,7 +133,7 @@ def pdf_to_jpg():
     """PDF को JPG में कन्वर्ट करता है।"""
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
-        return "कृपया एक PDF फाइल सिलेक्ट करें", 400
+        return " कृपया एक PDF फाइल सिलेक्ट करें", 400
     
     return convert_file_cloudconvert(
         file.stream, 
@@ -249,4 +249,3 @@ def image_to_pdf_final():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
-
