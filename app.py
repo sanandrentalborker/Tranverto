@@ -13,8 +13,8 @@ if not CLOUDCONVERT_API_KEY:
     print("WARNING: CLOUDCONVERT_API_KEY environment variable is NOT set. Conversions will fail.")
 
 # CloudConvert SDK को API Key के साथ इनिशियलाइज़ करें
-# FIX: अब Client को cloudconvert.Client के रूप में एक्सेस किया गया है।
-cloudconvert_api = cloudconvert.Client(api_key=CLOUDCONVERT_API_KEY)
+# FIX: 'Client' के बजाय 'CloudConvert' क्लास का उपयोग किया गया जो library के नए versions में standard है।
+cloudconvert_api = cloudconvert.CloudConvert(api_key=CLOUDCONVERT_API_KEY)
 
 
 # Flask App शुरू करें
