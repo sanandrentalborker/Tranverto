@@ -9,14 +9,13 @@ import time
 CLOUDCONVERT_API_KEY = os.environ.get("CLOUDCONVERT_API_KEY", "")
 
 # Flask App शुरू करें
-# सुनिश्चित करें कि आपके पास project root में एक index.html file है।
-app = Flask(__name__, static_url_path='', static_folder='.', template_folder='.')
+# IMPORTANT: 'template_folder='templates' सेट किया गया है, यह मानकर कि index.html 'templates' फ़ोल्डर के अंदर है।
+app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
 
 # Homepage रूट
 @app.route('/')
 def home():
-    """वेबसाइट का मुख्य पेज दिखाता है (templates/index.html या index.html)"""
-    # यदि index.html, app.py के समान directory में है:
+    """वेबसाइट का मुख्य पेज दिखाता है (templates/index.html)"""
     return render_template('index.html')
 
 # -------------------------
@@ -37,11 +36,11 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     }
 
     if not CLOUDCONVERT_API_KEY:
-        # Debugging के लिए Console में error print करें
         print("ERROR: CLOUDCONVERT_API_KEY environment variable is NOT set.")
         return "कन्वर्ज़न एरर: CLOUDCONVERT_API_KEY environment variable सेट नहीं है।", 500
 
     file_bytes = file_stream.read()
+    # इनपुट फ़ाइल एक्सटेंशन प्राप्त करें (जैसे 'pdf', 'docx', 'jpg')
     input_file_extension = filename.split('.')[-1]
     job_id = None
 
@@ -66,34 +65,34 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
                 }
             }
         }
-
+        
         response = requests.post(API_BASE_URL + 'jobs', headers=HEADERS, json=payload)
         response.raise_for_status() # HTTP errors के लिए
         job_data = response.json()
         job_id = job_data['id']
-
+        
         # Upload task details प्राप्त करें
         upload_task = job_data['tasks'][0]
         upload_task_url = upload_task['result']['form']['url']
         upload_params = upload_task['result']['form']['parameters']
 
         # 2. File Uploading (Form Data)
+        # requests.post को फ़ाइल के बाइट्स भेजें
         files = {'file': (filename, file_bytes, 'application/octet-stream')}
-
-        # CloudConvert को अपलोड करने के लिए form parameters में फाइल के साथ अन्य parameters जोड़ें
+        
         upload_response = requests.post(upload_task_url, data=upload_params, files=files)
         upload_response.raise_for_status()
-
+        
         # 3. Wait for Job Completion (Polling)
         MAX_POLLS = 12
         POLL_INTERVAL = 5 # seconds
-
+        
         for _ in range(MAX_POLLS):
             time.sleep(POLL_INTERVAL)
             status_response = requests.get(API_BASE_URL + f'jobs/{job_id}', headers=HEADERS)
             status_response.raise_for_status()
             job_status = status_response.json()
-
+            
             if job_status['status'] == 'finished':
                 break
             if job_status['status'] in ['error', 'cancelled']:
@@ -108,13 +107,13 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         download_task = next(t for t in job_status['tasks'] if t['name'] == 'download-file')
         if not download_task.get('result') or not download_task['result'].get('files'):
             return "कन्वर्ज़न सफल नहीं हुआ: आउटपुट फाइल नहीं मिली।", 500
-
+                
         file_url = download_task['result']['files'][0]['url']
-
+        
         # 5. Result File Download
         download_response = requests.get(file_url)
         download_response.raise_for_status()
-
+        
         # User को फाइल भेजें
         return send_file(
             io.BytesIO(download_response.content),
@@ -138,7 +137,7 @@ def pdf_to_word():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -154,7 +153,7 @@ def word_to_pdf():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith(('.docx', '.doc')):
         return " कृपया एक DOCX/DOC फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -170,7 +169,7 @@ def pdf_to_jpg():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return " कृपया एक PDF फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -186,7 +185,7 @@ def jpg_to_pdf():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith(('.jpg', '.jpeg', '.png')):
         return "कृपया एक इमेज फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -203,7 +202,7 @@ def pdf_to_ppt():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -219,7 +218,7 @@ def pdf_to_excel():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -235,7 +234,7 @@ def excel_to_pdf():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith(('.xlsx', '.xls')):
         return "कृपया एक Excel फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -256,7 +255,7 @@ def pdf_to_image():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
@@ -272,7 +271,7 @@ def image_to_pdf_final():
     file = request.files.get('file')
     if not file or file.filename == '' or not file.filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
         return "कृपया एक इमेज फाइल सिलेक्ट करें", 400
-
+    
     return convert_file_rest_api(
         file.stream, 
         file.filename,
