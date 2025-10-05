@@ -34,7 +34,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         print("DEBUG: Raw ConvertHub Response =", response.text)
 
         try:
-            job = response.json()
+            print("DEBUG: Raw ConvertHub Response =", response.text) try:     job = response.json() except Exception as e:     return f"कन्वर्ज़न एरर: ConvertHub ने invalid JSON भेजा — {str(e)}", 500
         except Exception as e:
             return f"कन्वर्ज़न एरर: ConvertHub ने invalid JSON भेजा — {str(e)}", 500
 
