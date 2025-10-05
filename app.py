@@ -29,7 +29,6 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     }
 
     try:
-        # Step 1: Submit file for conversion
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
         print("DEBUG: Raw ConvertHub Response =", response.text)
 
@@ -48,7 +47,6 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         if not job_id:
             return "कन्वर्ज़न एरर: ConvertHub ने job ID return नहीं किया।", 500
 
-        # Step 2: Poll job status
         for _ in range(12):
             status_response = requests.get(f"https://api.converthub.com/v2/jobs/{job_id}", headers=headers)
             status_data = status_response.json()
@@ -75,7 +73,6 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     except Exception as e:
         return f"नेटवर्क या API एरर: {str(e)}", 500
 
-# Conversion Routes
 @app.route('/pdf-to-word', methods=['POST'])
 def pdf_to_word():
     file = request.files.get('file')
