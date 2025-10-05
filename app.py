@@ -40,14 +40,12 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         job_id = job.get("job_id")
         print("DEBUG: Job ID =", job_id)
 
-        # ✅ Try direct download if already completed
         result = job.get("result", {})
         file_url = result.get("download_url")
         if job.get("status") == "completed" and file_url:
             download_response = requests.get(file_url)
             return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
-        # ❗ If file_url missing, retry silently
         print("DEBUG: First attempt incomplete — retrying silently...")
         time.sleep(5)
         retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
@@ -63,7 +61,8 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     except Exception as e:
         return f"नेटवर्क या API एरर: {str(e)}", 500
 
-# Conversion Routes
+# ✅ All Conversion Routes
+
 @app.route('/pdf-to-word', methods=['POST'])
 def pdf_to_word():
     file = request.files.get('file')
@@ -78,19 +77,58 @@ def word_to_pdf():
         return "कृपया एक Word फाइल सिलेक्ट करें", 400
     return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Word_to_PDF.pdf')
 
-@app.route('/jpg-to-pdf', methods=['POST'])
-def jpg_to_pdf():
-    file = request.files.get('file')
-    if not file or not file.filename.lower().endswith(('.jpg', '.jpeg', '.png')):
-        return "कृपया एक इमेज फाइल सिलेक्ट करें", 400
-    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Image_to_PDF.pdf')
-
 @app.route('/pdf-to-jpg', methods=['POST'])
 def pdf_to_jpg():
     file = request.files.get('file')
     if not file or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
     return convert_file_rest_api(file.stream, file.filename, 'jpg', 'image/jpeg', 'Tranverto_PDF_to_JPG.jpg')
+
+@app.route('/image-to-pdf', methods=['POST'])
+def image_to_pdf():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+        return "कृपया एक इमेज फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Image_to_PDF.pdf')
+
+@app.route('/pdf-to-ppt', methods=['POST'])
+def pdf_to_ppt():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith('.pdf'):
+        return "कृपया एक PDF फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'Tranverto_PDF_to_PPT.pptx')
+
+@app.route('/pdf-to-excel', methods=['POST'])
+def pdf_to_excel():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith('.pdf'):
+        return "कृपया एक PDF फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Tranverto_PDF_to_Excel.xlsx')
+
+@app.route('/excel-to-pdf', methods=['POST'])
+def excel_to_pdf():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith('.xlsx'):
+        return "कृपया एक Excel फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Excel_to_PDF.pdf')
+
+@app.route('/pdf-to-png', methods=['POST'])
+def pdf_to_png():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith('.pdf'):
+        return "कृपया एक PDF फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'png', 'image/png', 'Tranverto_PDF_to_PNG.png')
+
+@app.route('/jpg-to-pdf', methods=['POST'])
+def jpg_to_pdf():
+    file = request.files.get('file')
+    if not file or not file.filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+        return "कृपया एक इमेज फाइल सिलेक्ट करें", 400
+    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_JPG_to_PDF.pdf')
+
+@app.route('/pdf-translate', methods=['POST'])
+def pdf_translate():
+    return "PDF अनुवाद फ़ीचर अभी निर्माणाधीन है। जल्द ही उपलब्ध होगा।", 501
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
