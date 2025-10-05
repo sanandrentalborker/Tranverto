@@ -10,7 +10,7 @@ app = Flask(__name__, static_url_path='', static_folder='.', template_folder='te
 def home():
     return render_template('index.html')
 
-def convert_file_rest_api(file_stream, filename, output_format, mimetype, download_name):
+def convert_file_rest_api(file_stream, filename, output_format, mimetype, download_name, extra_options=None):
     api_key = os.environ.get("CONVERTHUB_API_KEY", "")
     print("DEBUG: CONVERTHUB_API_KEY =", repr(api_key))
 
@@ -27,6 +27,9 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     data = {
         "target_format": output_format
     }
+
+    if extra_options:
+        data["options"] = extra_options
 
     try:
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
@@ -56,12 +59,15 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
             download_response = requests.get(retry_url)
             return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
+        if output_format == "xlsx":
+            return "कन्वर्ज़न एरर: PDF में टेबल डेटा नहीं मिला या फॉर्मेट सपोर्ट नहीं किया गया।", 500
+
         return "कन्वर्ज़न एरर: दोबारा कोशिश के बाद भी आउटपुट फाइल नहीं मिली।", 500
 
     except Exception as e:
         return f"नेटवर्क या API एरर: {str(e)}", 500
 
-# ✅ All Conversion Routes
+# ✅ All Conversion Routes with Fixes
 
 @app.route('/pdf-to-word', methods=['POST'])
 def pdf_to_word():
@@ -82,7 +88,8 @@ def pdf_to_jpg():
     file = request.files.get('file')
     if not file or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-    return convert_file_rest_api(file.stream, file.filename, 'jpg', 'image/jpeg', 'Tranverto_PDF_to_JPG.jpg')
+    options = {"quality": 90, "resolution": "300dpi"}
+    return convert_file_rest_api(file.stream, file.filename, 'jpg', 'image/jpeg', 'Tranverto_PDF_to_JPG.jpg', options)
 
 @app.route('/image-to-pdf', methods=['POST'])
 def image_to_pdf():
@@ -110,14 +117,16 @@ def excel_to_pdf():
     file = request.files.get('file')
     if not file or not file.filename.lower().endswith('.xlsx'):
         return "कृपया एक Excel फाइल सिलेक्ट करें", 400
-    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Excel_to_PDF.pdf')
+    options = {"page_size": "A4", "fit_to_page": True}
+    return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Excel_to_PDF.pdf', options)
 
 @app.route('/pdf-to-png', methods=['POST'])
 def pdf_to_png():
     file = request.files.get('file')
     if not file or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-    return convert_file_rest_api(file.stream, file.filename, 'png', 'image/png', 'Tranverto_PDF_to_PNG.png')
+    options = {"resolution": "300dpi"}
+    return convert_file_rest_api(file.stream, file.filename, 'png', 'image/png', 'Tranverto_PDF_to_PNG.png', options)
 
 @app.route('/jpg-to-pdf', methods=['POST'])
 def jpg_to_pdf():
