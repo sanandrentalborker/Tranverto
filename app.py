@@ -29,21 +29,18 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     try:
         # Step 1: Submit file for conversion
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
-        if response.status_code != 200:
-            return f"कन्वर्ज़न एरर: {response.text}", 500
-
         job = response.json()
         job_id = job.get("job_id")
+        print("DEBUG: Job ID =", job_id)
+
         if not job_id:
-            return "कन्वर्ज़न एरर: Job ID नहीं मिला।", 500
+            return "कन्वर्ज़न एरर: ConvertHub ने job ID return नहीं किया।", 500
 
         # Step 2: Poll job status
         for _ in range(12):
             status_response = requests.get(f"https://api.converthub.com/v2/jobs/{job_id}", headers=headers)
-            if status_response.status_code != 200:
-                return f"स्टेटस एरर: {status_response.text}", 500
-
             status_data = status_response.json()
+
             if status_data.get("status") == "completed":
                 file_url = status_data.get("file_url")
                 if not file_url:
@@ -54,6 +51,9 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
 
             elif status_data.get("status") == "failed":
                 return "कन्वर्ज़न असफल: ConvertHub ने फाइल को प्रोसेस नहीं किया।", 500
+
+            elif status_data.get("error", {}).get("code") == "JOB_NOT_FOUND":
+                return f"कन्वर्ज़न एरर: ConvertHub ने job को नहीं पहचाना। Job ID: {job_id}", 500
 
             time.sleep(5)
 
