@@ -3,6 +3,7 @@ import io
 import os
 import requests
 import time
+import json
 
 app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
 
@@ -29,7 +30,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     }
 
     if extra_options and isinstance(extra_options, dict):
-        data["options"] = extra_options
+        data["options"] = json.dumps(extra_options)
 
     try:
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
