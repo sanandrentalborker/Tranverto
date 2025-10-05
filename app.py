@@ -32,6 +32,12 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         # Step 1: Submit file for conversion
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
         job = response.json()
+        print("DEBUG: ConvertHub Response =", job)
+
+        if not job.get("success", False):
+            error_msg = job.get("error", {}).get("message", "Unknown error")
+            return f"कन्वर्ज़न एरर: ConvertHub ने job शुरू नहीं किया — {error_msg}", 500
+
         job_id = job.get("job_id")
         print("DEBUG: Job ID =", job_id)
 
@@ -42,6 +48,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         for _ in range(12):
             status_response = requests.get(f"https://api.converthub.com/v2/jobs/{job_id}", headers=headers)
             status_data = status_response.json()
+            print("DEBUG: Job Status =", status_data)
 
             if status_data.get("status") == "completed":
                 file_url = status_data.get("file_url")
