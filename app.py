@@ -5,7 +5,7 @@ import requests
 import time
 
 # --- Global Configuration ---
-CLOUDCONVERT_API_KEY = os.environ.get("MY_SECRET_KEY", "")
+CLOUDCONVERT_API_KEY = os.environ.get("CLOUDCONVERT_API_KEY", "")
 print("DEBUG: CLOUDCONVERT_API_KEY =", CLOUDCONVERT_API_KEY)
 
 # Flask App शुरू करें
