@@ -12,7 +12,8 @@ def home():
 
 def convert_file_rest_api(file_stream, filename, output_format, mimetype, download_name):
     api_key = os.environ.get("CONVERTHUB_API_KEY", "")
-print("DEBUG: CONVERTHUB_API_KEY =", api_key)
+    print("DEBUG: CONVERTHUB_API_KEY =", api_key)
+
     if not api_key:
         return "कन्वर्ज़न एरर: CONVERTHUB_API_KEY environment variable सेट नहीं है।", 500
 
