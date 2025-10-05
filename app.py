@@ -15,7 +15,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     print("DEBUG: CONVERTHUB_API_KEY =", repr(api_key))
 
     if not api_key:
-        return "कन्वर्ज़न एरर: CONVERTHUB_API_KEY environment variable सेट नहीं है।", 500
+        return "कन्वर्ज़न एरर: API key सेट नहीं है।", 500
 
     file_bytes = file_stream.read()
     headers = {
@@ -29,15 +29,10 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     }
 
     try:
-        # Step 1: Submit file for conversion
         response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
         print("DEBUG: Raw ConvertHub Response =", response.text)
 
-        try:
-            job = response.json()
-        except Exception as e:
-            return f"कन्वर्ज़न एरर: ConvertHub ने invalid JSON भेजा — {str(e)}", 500
-
+        job = response.json()
         if not job.get("success", False):
             error_msg = job.get("error", {}).get("message", "Unknown error")
             return f"कन्वर्ज़न एरर: ConvertHub ने job शुरू नहीं किया — {error_msg}", 500
@@ -45,38 +40,25 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         job_id = job.get("job_id")
         print("DEBUG: Job ID =", job_id)
 
-        if not job_id:
-            return "कन्वर्ज़न एरर: ConvertHub ने job ID return नहीं किया।", 500
-
-        # ✅ If status is already completed, use result directly
-        if job.get("status") == "completed" and job.get("result", {}).get("download_url"):
-            file_url = job["result"]["download_url"]
+        # ✅ Try direct download if already completed
+        result = job.get("result", {})
+        file_url = result.get("download_url")
+        if job.get("status") == "completed" and file_url:
             download_response = requests.get(file_url)
             return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
-        # Step 2: Poll job status
-        for _ in range(12):
-            status_response = requests.get(f"https://api.converthub.com/v2/jobs/{job_id}", headers=headers)
-            status_data = status_response.json()
-            print("DEBUG: Job Status =", status_data)
+        # ❗ If file_url missing, retry silently
+        print("DEBUG: First attempt incomplete — retrying silently...")
+        time.sleep(5)
+        retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
+        retry_job = retry_response.json()
+        retry_url = retry_job.get("result", {}).get("download_url")
 
-            if status_data.get("status") == "completed":
-                file_url = status_data.get("file_url")
-                if not file_url:
-                    return "कन्वर्ज़न सफल नहीं हुआ: आउटपुट फाइल नहीं मिली।", 500
+        if retry_job.get("status") == "completed" and retry_url:
+            download_response = requests.get(retry_url)
+            return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
-                download_response = requests.get(file_url)
-                return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
-
-            elif status_data.get("status") == "failed":
-                return "कन्वर्ज़न असफल: ConvertHub ने फाइल को प्रोसेस नहीं किया।", 500
-
-            elif status_data.get("error", {}).get("code") == "JOB_NOT_FOUND":
-                return f"कन्वर्ज़न एरर: ConvertHub ने job को नहीं पहचाना। Job ID: {job_id}", 500
-
-            time.sleep(5)
-
-        return "कन्वर्ज़न टाइमआउट: ConvertHub ने समय पर जवाब नहीं दिया।", 500
+        return "कन्वर्ज़न एरर: दोबारा कोशिश के बाद भी आउटपुट फाइल नहीं मिली।", 500
 
     except Exception as e:
         return f"नेटवर्क या API एरर: {str(e)}", 500
