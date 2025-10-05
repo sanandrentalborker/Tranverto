@@ -14,8 +14,6 @@ app = Flask(__name__, static_url_path='', static_folder='.', template_folder='te
 # Homepage रूट
 @app.route('/')
 def home():
-    if not CLOUDCONVERT_API_KEY:
-        return "❌ API Key missing. Please set CLOUDCONVERT_API_KEY in Render environment.", 500
     return render_template('index.html')
 
 # -------------------------
