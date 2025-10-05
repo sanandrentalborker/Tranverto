@@ -28,7 +28,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         "target_format": output_format
     }
 
-    if extra_options:
+    if extra_options and isinstance(extra_options, dict):
         data["options"] = extra_options
 
     try:
@@ -67,7 +67,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     except Exception as e:
         return f"नेटवर्क या API एरर: {str(e)}", 500
 
-# ✅ All Conversion Routes with Fixes
+# ✅ All Conversion Routes
 
 @app.route('/pdf-to-word', methods=['POST'])
 def pdf_to_word():
@@ -110,12 +110,13 @@ def pdf_to_excel():
     file = request.files.get('file')
     if not file or not file.filename.lower().endswith('.pdf'):
         return "कृपया एक PDF फाइल सिलेक्ट करें", 400
-    return convert_file_rest_api(file.stream, file.filename, 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Tranverto_PDF_to_Excel.xlsx')
+    options = {"table_detection": "aggressive"}
+    return convert_file_rest_api(file.stream, file.filename, 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Tranverto_PDF_to_Excel.xlsx', options)
 
 @app.route('/excel-to-pdf', methods=['POST'])
 def excel_to_pdf():
     file = request.files.get('file')
-    if not file or not file.filename.lower().endswith('.xlsx'):
+    if not file or not file.filename.lower().endswith(('.xlsx', '.xls')):
         return "कृपया एक Excel फाइल सिलेक्ट करें", 400
     options = {"page_size": "A4", "fit_to_page": True}
     return convert_file_rest_api(file.stream, file.filename, 'pdf', 'application/pdf', 'Tranverto_Excel_to_PDF.pdf', options)
