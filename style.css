@@ -1,24 +1,121 @@
 /*
  * Tranverto: Optimized Front-End CSS
  * Purpose: Provides a basic style foundation.
- * NOTE: All major visual styling (colors, shadows, layouts) is now handled 
- * by Tailwind CSS utility classes directly in the index.html file.
+ * NOTE: All major visual styling (colors, shadows, layouts) is handled 
+ * by Tailwind CSS utility classes directly in index.html.
  */
 
 /* 1. Global Reset and Font */
 body {
-    /* Sets a safe fallback font family */
-    font-family: 'Arial', sans-serif; 
+    font-family: 'Inter', Arial, sans-serif; /* Tailwind-compatible modern font */
     margin: 0;
     padding: 0;
-    /* Default dark text color */
-    color: #333; 
+    color: #1f2937; /* Tailwind gray-800 */
+    background-color: #f7f9fc; /* Tailwind gray-50 */
 }
 
-/* 2. Container Utility (Standard width setting for sections) */
+/* 2. Container Utility */
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0;
+}
+
+/* 3. Headings and Typography */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 700;
+    color: #111827; /* Tailwind gray-900 */
+}
+
+/* 4. Links */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #3b82f6; /* Tailwind blue-500 */
+}
+
+/* 5. Buttons Base (fallback in case Tailwind classes are missing) */
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* 6. Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.p-4 { padding: 1rem; }
+.rounded { border-radius: 0.5rem; }
+
+.bg-blue-500 { background-color: #3b82f6; }
+.text-white { color: #fff; }
+.shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+/* 7. Form Inputs */
+input, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db; /* Tailwind gray-300 */
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* 8. Modals & Overlays */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(31,41,55,0.8); /* Tailwind gray-800/opacity */
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* 9. Loader (fallback if Tailwind spinner not used) */
+.loader {
+    border-top-color: #1d4ed8; /* Tailwind blue-700 */
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #d1d5db; /* Tailwind gray-300 */
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 10. Responsive Utilities */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px 0;
+    }
 }
