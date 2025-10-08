@@ -1,35 +1,32 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tranverto - प्रीमियम PDF और फ़ाइल कनवर्टर</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Tranverto - Smarter File Conversion for Everyone</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/static/style.css"> <!-- NOTE: Flask Static Folder path -->
+    <link rel="stylesheet" href="/static/style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* कस्टम CSS यहाँ प्रीमियम और 3D इफ़ेक्ट के लिए जोड़ा गया है */
+        /* Royal Look & 3D Effect for Cards */
         body {
             font-family: 'Inter', sans-serif;
-            /* गहरी नीली पृष्ठभूमि (Royal Look) */
-            background: linear-gradient(135deg, #f7f9fc 0%, #e0e7ff 100%); 
+            /* Deep Blue/White Gradient Background for a premium feel */
+            background: linear-gradient(135deg, #f7f9fc 0%, #e0e7ff 100%);  
         }
-        /* Enhanced Card Design for Premium/3D Look */
         .converter-card {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
             border: 1px solid #d1d5db; /* Light gray border */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Initial subtle shadow */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
         }
         .converter-card:hover {
-            /* 3D लिफ्ट और शाही चमक (Royal Glow) */
+            /* Deeper 3D Lift and Royal Glow */
             transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2), 0 5px 15px rgba(251, 191, 36, 0.5); /* Deep Blue & Gold Shadow */
+            box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2), 0 5px 15px rgba(251, 191, 36, 0.6); /* Deep Blue & Gold Shadow */
             border-color: #fbbf24; /* Amber/Gold border on hover */
         }
-        /* Header Shadow for Deep Look */
         .premium-header {
             box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
@@ -42,8 +39,9 @@
             border-color: #fbbf24; /* Gold border on hover */
             background-color: #e5e7eb;
         }
+        /* Loader and Modal styles (remaining the same) */
         .loader {
-            border-top-color: #1e3a8a; /* Deep blue loader */
+            border-top-color: #1e3a8a; 
             -webkit-animation: spin 1s ease-in-out infinite;
             animation: spin 1s ease-in-out infinite;
         }
@@ -51,184 +49,189 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .modal-open {
-            overflow: hidden;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <!-- Header & Professional Logo Section -->
     <header class="premium-header w-full max-w-7xl px-4 py-4 md:py-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center bg-white rounded-xl mb-12 border-b-4 border-indigo-700">
         <div class="flex items-center space-x-4">
-            <!-- Logo Image Fix -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Tranverto Logo" class="w-12 h-12 transform rotate-0" onerror="this.onerror=null;this.src='https://placehold.co/48x48/fbbf24/1e3a8a?text=TR'">
             
             <h1 class="text-5xl md:text-6xl font-black text-gray-900 tracking-tight">Tran<span class="text-indigo-800">verto</span></h1>
         </div>
-        <p class="text-xl text-gray-700 mt-3 sm:mt-0 sm:ml-10 sm:border-l sm:border-gray-400 sm:pl-10 font-bold">100% प्रीमियम, सुरक्षित और मुफ़्त कन्वर्ज़न</p>
+        <p class="text-xl text-gray-700 mt-3 sm:mt-0 sm:ml-10 sm:border-l sm:border-gray-400 sm:pl-10 font-bold">Smarter File Conversion for Everyone</p>
     </header>
 
-    <!-- Main Content Area -->
     <main class="w-full max-w-7xl flex-grow px-4">
         <section class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-900 mb-4 tracking-tight">आपका शाही क्वालिटी फ़ाइल कन्वर्ज़न समाधान</h2>
-            <p class="text-2xl text-gray-700 font-medium">तुरंत शुरू करें। बेहतरीन स्पीड और परिणाम की गारंटी।</p>
+            <h2 class="text-4xl md:text-5xl font-black text-indigo-900 mb-4 tracking-tight">Transform your documents instantly, securely, and with guaranteed quality.</h2>
+            <p class="text-2xl text-gray-700 font-medium">Start converting with Tranverto—right from your browser, no software to install.</p>
         </section>
 
-        <h2 class="text-3xl font-extrabold text-indigo-800 mb-8 border-b-4 border-amber-500 pb-3 max-w-5xl mx-auto">हमारे प्रीमियम कन्वर्ज़न टूल्स</h2>
+        <h2 class="text-3xl font-black text-indigo-800 mb-8 border-b-4 border-amber-500 pb-3 max-w-5xl mx-auto">Our Powerful Conversion Tools</h2>
         
-        <!-- Tools Grid -->
         <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             
-            <!-- Tool 1: PDF to Word -->
             <div id="tool-pdf-to-word" data-route="/pdf-to-word" data-input-ext=".pdf" data-output-name="Word" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-amber-500">📄</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF से Word</h3>
-                <p class="text-sm text-gray-600 mb-4">PDF को संपादन योग्य DOCX फॉर्मेट में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF to Word</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Convert PDFs into fully editable DOCX files in seconds.</p>
                 <button onclick="openModal('tool-pdf-to-word')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
             
-            <!-- Tool 2: Word to PDF -->
             <div id="tool-word-to-pdf" data-route="/word-to-pdf" data-input-ext=".docx, .doc" data-output-name="PDF" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-red-600">📄</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Word से PDF</h3>
-                <p class="text-sm text-gray-600 mb-4">DOCX या DOC फ़ाइलों को PDF फॉर्मेट में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Word to PDF</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Transform your DOCX or DOC files into print-ready PDF format.</p>
                 <button onclick="openModal('tool-word-to-pdf')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
 
-            <!-- Tool 3: PDF to JPG -->
             <div id="tool-pdf-to-jpg" data-route="/pdf-to-jpg" data-input-ext=".pdf" data-output-name="JPG" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-yellow-500">🖼️</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF से JPG</h3>
-                <p class="text-sm text-gray-600 mb-4">PDF पेजों को उच्च-गुणवत्ता वाली JPG इमेज में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF to JPG</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Turn your PDF pages into high-quality JPG images instantly.</p>
                 <button onclick="openModal('tool-pdf-to-jpg')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
 
-            <!-- Tool 4: JPG to PDF -->
             <div id="tool-jpg-to-pdf" data-route="/jpg-to-pdf" data-input-ext=".jpg, .jpeg, .png, .gif" data-output-name="PDF" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-green-700">🖼️</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">JPG/PNG से PDF</h3>
-                <p class="text-sm text-gray-600 mb-4">JPG, PNG और GIF इमेजेज को एक PDF में मिलाएं।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">JPG/PNG to PDF</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Combine JPG, PNG, or GIF images into a single, professional PDF file.</p>
                 <button onclick="openModal('tool-jpg-to-pdf')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
             
-            <!-- Tool 5: PDF to PPT -->
             <div id="tool-pdf-to-ppt" data-route="/pdf-to-ppt" data-input-ext=".pdf" data-output-name="PPT" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-orange-600">📊</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF से PPT</h3>
-                <p class="text-sm text-gray-600 mb-4">PDF को संपादन योग्य PowerPoint प्रेजेंटेशन (PPTX) में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF to PPT</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Convert your PDFs into editable PowerPoint presentations (PPTX).</p>
                 <button onclick="openModal('tool-pdf-to-ppt')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
 
-            <!-- Tool 6: PDF to Excel -->
             <div id="tool-pdf-to-excel" data-route="/pdf-to-excel" data-input-ext=".pdf" data-output-name="Excel" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-emerald-600">📈</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF से Excel</h3>
-                <p class="text-sm text-gray-600 mb-4">PDF से डेटा को XLSX स्प्रेडशीट में एक्सट्रैक्ट करें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF to Excel</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Extract data from PDF tables into clean, organized XLSX spreadsheets.</p>
                 <button onclick="openModal('tool-pdf-to-excel')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
             
-            <!-- Tool 7: Excel to PDF -->
             <div id="tool-excel-to-pdf" data-route="/excel-to-pdf" data-input-ext=".xlsx, .xls" data-output-name="PDF" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-red-800">📈</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Excel से PDF</h3>
-                <p class="text-sm text-gray-600 mb-4">Excel स्प्रेडशीट को PDF फॉर्मेट में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Excel to PDF</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Convert your Excel sheets into secure, shareable PDF documents.</p>
                 <button onclick="openModal('tool-excel-to-pdf')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
 
-            <!-- Tool 8: PDF to Image -->
             <div id="tool-pdf-to-image" data-route="/pdf-to-image" data-input-ext=".pdf" data-output-name="PNG" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-sky-600">📸</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF से PNG</h3>
-                <p class="text-sm text-gray-600 mb-4">PDF पेजों को उच्च-गुणवत्ता वाली PNG इमेज में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">PDF to PNG</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Generate crisp, high-resolution PNG images from your PDF pages.</p>
                 <button onclick="openModal('tool-pdf-to-image')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
             
-            <!-- Tool 9: Image to PDF -->
             <div id="tool-image-to-pdf" data-route="/image-to-pdf" data-input-ext=".jpg, .jpeg, .png, .gif" data-output-name="PDF" class="converter-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-start hover:shadow-2xl">
                 <span class="text-4xl mb-3 text-purple-600">📸</span>
-                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Image से PDF</h3>
-                <p class="text-sm text-gray-600 mb-4">JPG, PNG, GIF को एक PDF दस्तावेज़ में बदलें।</p>
+                <h3 class="text-xl font-extrabold text-gray-800 mb-2">Image to PDF</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Easily create a single PDF from multiple image files (JPG, PNG, GIF).</p>
                 <button onclick="openModal('tool-image-to-pdf')" class="mt-auto w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    कनवर्टर खोलें
+                    Open Converter
                 </button>
             </div>
             
-            <!-- Tool 10: PDF Translate (Planned Feature - Royal Look) -->
             <div id="tool-pdf-translate" data-route="/pdf-translate" data-input-ext=".pdf" data-output-name="Translated PDF" class="converter-card bg-gray-200 p-6 rounded-2xl shadow-inner flex flex-col items-start opacity-70 cursor-not-allowed border-gray-300">
                 <span class="text-4xl mb-3 text-gray-600">📄➡️🗣️</span>
-                <h3 class="text-xl font-extrabold text-gray-700 mb-2">PDF अनुवाद</h3>
-                <p class="text-sm text-gray-600 mb-4">किसी भी भाषा में PDF का तुरंत अनुवाद करें। (जल्द आ रहा है)</p>
+                <h3 class="text-xl font-extrabold text-gray-700 mb-2">PDF Translator</h3>
+                <p class="text-sm text-gray-600 mb-4 h-12">Instantly translate PDFs into any language — powered by AI. (Coming Soon)</p>
                 <button disabled class="mt-auto w-full bg-gray-500 text-white font-semibold py-3 px-4 rounded-xl shadow-md">
-                    जल्द आ रहा है
+                    Coming Soon
                 </button>
             </div>
-            
         </div>
+
+        <section class="bg-indigo-50 rounded-2xl p-10 mt-16 shadow-2xl border-l-8 border-amber-500 max-w-5xl mx-auto">
+            <h2 class="text-3xl font-black text-indigo-900 mb-6 text-center">Why Choose Tranverto?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-4">
+                    <span class="text-5xl text-indigo-700 block mb-3">⚡</span>
+                    <h3 class="text-xl font-bold text-gray-800">Fast & Simple</h3>
+                    <p class="text-gray-600">Convert files in just a few clicks—no steep learning curve.</p>
+                </div>
+                <div class="p-4">
+                    <span class="text-5xl text-amber-600 block mb-3">🔒</span>
+                    <h3 class="text-xl font-bold text-gray-800">100% Secure</h3>
+                    <p class="text-gray-600">Your files are automatically deleted after processing for maximum privacy.</p>
+                </div>
+                <div class="p-4">
+                    <span class="text-5xl text-green-700 block mb-3">✨</span>
+                    <h3 class="text-xl font-bold text-gray-800">High Quality</h3>
+                    <p class="text-gray-600">We preserve layout, fonts, and formatting perfectly during conversion.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-16 mb-12 bg-white p-10 rounded-2xl shadow-xl border-t-8 border-indigo-700 max-w-5xl mx-auto">
+            <h2 class="text-4xl font-black text-indigo-900 mb-4">Start Converting Now!</h2>
+            <p class="text-xl text-gray-700 mb-8">Upload your file, choose your desired format, and let Tranverto handle the rest. File conversion has never been this easy.</p>
+            <button onclick="document.getElementById('tool-pdf-to-word').scrollIntoView({ behavior: 'smooth' })" class="bg-amber-500 hover:bg-amber-600 text-indigo-900 font-extrabold text-lg py-4 px-12 rounded-xl transition duration-300 shadow-2xl transform hover:scale-[1.03]">
+                Explore All Tools
+            </button>
+        </section>
     </main>
 
-    <!-- Modal for Conversion -->
     <div id="conversion-modal" class="fixed inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-3xl w-full max-w-lg p-8 transform transition-all duration-300 scale-100 border-t-4 border-amber-500">
-            <h3 id="modal-title" class="text-3xl font-extrabold text-indigo-800 mb-5 border-b pb-2">फ़ाइल कनवर्ट करें</h3>
+            <h3 id="modal-title" class="text-3xl font-extrabold text-indigo-800 mb-5 border-b pb-2">Convert Your File</h3>
             
             <form id="upload-form" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="conversion_route" id="conversion-route">
 
-                <!-- File Drop/Select Area -->
                 <label for="file-upload" class="upload-area block w-full p-12 mb-6 text-center rounded-xl transition duration-300">
                     <svg class="w-12 h-12 mx-auto text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"></path></svg>
-                    <p class="mt-3 text-lg text-gray-700 font-extrabold">फ़ाइल अपलोड करने के लिए क्लिक करें या ड्रैग करें</p>
+                    <p class="mt-3 text-lg text-gray-700 font-extrabold">Click or Drag to Upload File</p>
                     <p id="allowed-formats" class="text-sm text-gray-600 mt-2 font-medium"></p>
                 </label>
                 <input type="file" name="file" id="file-upload" class="hidden" required>
                 
-                <!-- File Preview/Status -->
                 <div id="file-status" class="mb-4 text-center hidden p-3 bg-indigo-100 rounded-xl border border-indigo-400">
-                    <p class="text-base text-gray-800 font-bold">चयनित फ़ाइल: <span id="file-name" class="font-extrabold text-indigo-900"></span></p>
+                    <p class="text-base text-gray-800 font-bold">Selected File: <span id="file-name" class="font-extrabold text-indigo-900"></span></p>
                 </div>
                 
-                <!-- Progress & Loading State -->
                 <div id="progress-area" class="hidden text-center p-4 bg-amber-100 rounded-xl border border-amber-400 shadow-md">
                     <div class="w-12 h-12 border-4 border-gray-300 border-t-4 border-indigo-700 border-solid rounded-full loader mx-auto mb-3"></div>
-                    <p class="text-amber-900 font-extrabold text-lg">कन्वर्ट हो रहा है... कृपया इंतजार करें।</p>
+                    <p class="text-amber-900 font-extrabold text-lg">Converting... Please wait.</p>
                 </div>
 
-                <!-- Error/Success Message -->
                 <div id="message-box" class="mt-5 p-4 rounded-xl text-md hidden font-extrabold" role="alert"></div>
 
                 <div class="flex justify-end space-x-4 mt-8">
                     <button type="button" onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-md">
-                        बंद करें
+                        Close
                     </button>
                     <button type="submit" id="convert-button" class="bg-indigo-700 hover:bg-indigo-800 text-white font-extrabold py-3 px-6 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.05]">
-                        कन्वर्ट करें
+                        Convert
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="w-full max-w-7xl text-center py-8 mt-16 border-t-4 border-indigo-700 px-4 bg-white rounded-t-xl shadow-inner">
-        <p class="text-md text-gray-700 font-semibold">© 2025 Tranverto | भारत में गर्व से निर्मित (Proudly Made in India)।</p>
+        <p class="text-md text-gray-700 font-semibold">© 2025 Tranverto | Proudly Made in India.</p>
     </footer>
 
     <script>
@@ -256,7 +259,7 @@
             progressArea.classList.add('hidden');
             messageBox.classList.add('hidden');
             convertButton.disabled = false;
-            convertButton.textContent = 'कन्वर्ट करें';
+            convertButton.textContent = 'Convert'; // Changed to English
             convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
             convertButton.classList.add('bg-indigo-700', 'hover:bg-indigo-800', 'shadow-xl');
             
@@ -266,15 +269,15 @@
             const outputName = toolElement.getAttribute('data-output-name');
             const toolTitle = toolElement.querySelector('h3').textContent; // Get the H3 text
 
-            // Set modal content
+            // Set modal content (Changed to English)
             modalTitle.textContent = toolTitle;
-            allowedFormats.textContent = `अनुमत फ़ॉर्मेट: ${inputExt.toUpperCase().split(',').join(', ')}`;
+            allowedFormats.textContent = `Allowed Formats: ${inputExt.toUpperCase().split(',').join(', ')}`;
             fileUpload.setAttribute('accept', inputExt);
             document.getElementById('conversion-route').value = currentToolRoute;
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            document.body.classList.add('modal-open'); // To prevent scrolling behind the modal
+            document.body.classList.add('modal-open'); 
         }
 
         // Function to close the modal
@@ -282,7 +285,7 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             messageBox.classList.add('hidden');
-            document.body.classList.remove('modal-open'); // Re-enable scrolling
+            document.body.classList.remove('modal-open'); 
         }
 
         // Handle file selection
@@ -302,15 +305,15 @@
             e.preventDefault();
 
             if (fileUpload.files.length === 0) {
-                showMessage('कृपया कनवर्ट करने के लिए एक फ़ाइल चुनें।', 'error');
+                showMessage('Please select a file to convert.', 'error'); // Changed to English
                 return;
             }
 
-            // Set loading state
+            // Set loading state (Changed to English)
             progressArea.classList.remove('hidden');
             messageBox.classList.add('hidden');
             convertButton.disabled = true;
-            convertButton.textContent = 'कन्वर्ट हो रहा है...';
+            convertButton.textContent = 'Converting...'; 
             convertButton.classList.remove('bg-indigo-700', 'hover:bg-indigo-800', 'shadow-xl');
             convertButton.classList.add('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
 
@@ -320,18 +323,15 @@
             const route = document.getElementById('conversion-route').value;
 
             try {
-                // Ensure the route is pointing to the correct Flask endpoint
                 const response = await fetch(route, {
                     method: 'POST',
                     body: formData
                 });
 
-                // Check for file download or error message
                 if (response.ok && response.headers.get('Content-Type') && response.headers.get('Content-Type').includes('application')) {
                     // Successful file download
                     const blob = await response.blob();
                     
-                    // Try to get filename from Content-Disposition header
                     let downloadName = 'converted_file';
                     const disposition = response.headers.get('Content-Disposition');
                     if (disposition && disposition.indexOf('attachment') !== -1) {
@@ -340,14 +340,14 @@
                         if (matches != null && matches[1]) {
                             downloadName = matches[1].replace(/['"]/g, '');
                         }
-                    } else if (route === '/pdf-to-word') {
-                        downloadName = fileUpload.files[0].name.replace('.pdf', '.docx');
-                    } else if (route === '/word-to-pdf') {
-                         downloadName = fileUpload.files[0].name.replace(/(\.docx|\.doc)$/i, '.pdf');
-                    } else if (route.includes('/pdf-to-image')) {
-                         downloadName = fileUpload.files[0].name.replace('.pdf', '.png');
-                    } else if (route.includes('/image-to-pdf')) {
-                         downloadName = fileUpload.files[0].name.replace(/(\.jpg|\.jpeg|\.png|\.gif)$/i, '.pdf');
+                    } else { // Fallback file name logic
+                        const originalName = fileUpload.files[0].name;
+                        const toolName = document.getElementById('modal-title').textContent.toLowerCase().replace(' to ', '-to-');
+                        downloadName = `tranverto-${toolName}-${originalName.split('.').slice(0, -1).join('.')}`;
+                        
+                        if (route.includes('/pdf-to-word')) downloadName += '.docx';
+                        else if (route.includes('/word-to-pdf')) downloadName += '.pdf';
+                        // Add more specific fallbacks if needed
                     }
 
                     const url = window.URL.createObjectURL(blob);
@@ -359,23 +359,20 @@
                     a.click();
                     window.URL.revokeObjectURL(url);
 
-                    showMessage('कन्वर्ज़न सफल! आपकी फ़ाइल डाउनलोड हो रही है।', 'success');
+                    showMessage('Conversion successful! Your file is downloading.', 'success'); // Changed to English
                 } else {
-                    // Handle API or server error response (likely a 500 or 400 with text)
                     const errorText = await response.text();
-                    // This is where the CLOUDCONVERT_API_KEY error message is returned
-                    showMessage(`कन्वर्ज़न एरर: नेटवर्क या API एरर: ${errorText || 'अज्ञात सर्वर एरर'}`, 'error');
+                    showMessage(`Conversion Error: Network or API Error: ${errorText || 'Unknown Server Error'}`, 'error'); // Changed to English
                 }
 
             } catch (error) {
                 console.error("Fetch Error:", error);
-                showMessage(`नेटवर्क एरर: सर्वर तक पहुँचने में विफल।`, 'error');
+                showMessage(`Network Error: Failed to reach the server.`, 'error'); // Changed to English
             } finally {
                 // Reset loading state
                 progressArea.classList.add('hidden');
-                // We keep the message visible until the user closes the modal
                 convertButton.disabled = false;
-                convertButton.textContent = 'कन्वर्ट करें';
+                convertButton.textContent = 'Convert'; // Changed to English
                 convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
                 convertButton.classList.add('bg-indigo-700', 'hover:bg-indigo-800', 'shadow-xl');
             }
