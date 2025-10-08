@@ -3,40 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Tranvetro – Free Online PDF, Word, Excel & Image Converter</title>
     <meta name="description" content="Convert PDF, Word, Excel, PowerPoint, and images instantly with Tranvetro. Free, fast, secure, and online file conversion — no installation required.">
     <meta name="keywords" content="PDF to Word, Word to PDF, PDF to JPG, JPG to PDF, PDF to Excel, Excel to PDF, PDF to PPT, PDF Converter, Online File Converter, PDF Translation">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/static/style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
+        /* Design Shift: Clean, Modern Look (Soft Blues & Whites) */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f9fc;
+            background-color: #f7f9fc; /* Very light grey/blue background */
         }
+        /* Converter Card Refinement */
         .converter-card {
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e5e7eb; /* Subtle light border */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
         }
         .converter-card:hover {
+            /* Clean lift with a touch of blue shadow */
             transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); /* Soft Blue Shadow */
+            border-color: #3b82f6; /* Blue border on hover */
         }
+        /* Upload Area */
         .upload-area {
-            border: 3px dashed #93c5fd;
+            border: 3px dashed #93c5fd; /* Light blue dashed border */
             transition: border-color 0.3s, background-color 0.3s;
-            background-color: #eff6ff;
+            background-color: #eff6ff; /* Very light blue background */
         }
         .upload-area:hover {
-            border-color: #3b82f6;
+            border-color: #3b82f6; /* Blue border on hover */
             background-color: #e0f2fe;
         }
+        /* Loader remains Blue */
         .loader {
             border-top-color: #1d4ed8; 
             -webkit-animation: spin 1s ease-in-out infinite;
@@ -46,120 +49,272 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Utility for Icons (if custom icons are used) */
         .svg-icon {
             fill: currentColor;
             width: 24px;
             height: 24px;
         }
+
+        /* --- New Mobile/Tablet Enhancements --- */
+        /* Sticky Header for better mobile navigation */
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
-    <!-- Header -->
-    <header class="w-full max-w-7xl px-4 py-4 md:py-6 flex flex-col md:flex-row justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
-        <div class="flex items-center space-x-3 mb-4 md:mb-0">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Tranverto Logo" class="w-10 h-10">
-            <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
+    <header class="header-sticky w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
+        <div class="flex items-center space-x-3">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Tranverto Logo" class="w-10 h-10 transform rotate-0" onerror="this.onerror=null;this.src='https://placehold.co/40x40/3b82f6/ffffff?text=TR'">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
         </div>
-        <nav class="flex flex-wrap justify-center md:justify-end space-x-4 md:space-x-6 text-gray-600 font-semibold mb-2 md:mb-0">
-            <a href="#" class="hover:text-blue-600 text-sm sm:text-base">Home</a>
-            <a href="#tools-grid" class="hover:text-blue-600 text-sm sm:text-base">Tools</a>
-            <a href="#" class="hover:text-blue-600 text-sm sm:text-base">About</a>
-            <a href="#" class="hover:text-blue-600 text-sm sm:text-base">Contact</a>
+        
+        <nav class="hidden lg:flex space-x-6 text-gray-600 font-semibold">
+            <a href="#" class="hover:text-blue-600">Home</a>
+            <a href="#tools-grid" class="hover:text-blue-600">Tools</a>
+            <a href="#" class="hover:text-blue-600">About</a>
+            <a href="#" class="hover:text-blue-600">Contact</a>
         </nav>
-        <a href="#tools-grid" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 text-sm sm:text-base">
+        
+        <a href="#tools-grid" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden md:block">
             Convert Now
         </a>
+        
+        <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition duration-150">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
     </header>
+
+    <div id="mobile-menu" class="hidden w-full bg-white shadow-xl lg:hidden border-b border-gray-200">
+        <nav class="flex flex-col space-y-2 p-4 text-gray-700 font-semibold">
+            <a href="#" class="block p-2 rounded hover:bg-blue-50 hover:text-blue-600">Home</a>
+            <a href="#tools-grid" class="block p-2 rounded hover:bg-blue-50 hover:text-blue-600">Tools</a>
+            <a href="#" class="block p-2 rounded hover:bg-blue-50 hover:text-blue-600">About</a>
+            <a href="#" class="block p-2 rounded hover:bg-blue-50 hover:text-blue-600">Contact</a>
+            <a href="#tools-grid" class="block p-2 mt-4 text-center bg-blue-600 text-white rounded-lg hover:bg-blue-700">Convert Now</a>
+        </nav>
+    </div>
 
     <main class="w-full max-w-7xl flex-grow px-4 mt-8">
         
-        <!-- Hero Section -->
         <section class="text-center mb-16 bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-t-8 border-blue-500">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 tracking-tight">Tranvetro – Fast, Secure & Smart File Conversion</h1>
-            <p class="text-base sm:text-lg md:text-xl text-gray-700 font-medium max-w-3xl mx-auto mb-6 sm:mb-8">Convert, edit, merge, compress, and translate your files instantly — all online, all free.</p>
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-black text-gray-900 mb-4 tracking-tight">Tranvetro – Fast, Secure & Smart File Conversion</h1>
+            <p class="text-lg sm:text-xl text-gray-700 font-medium max-w-3xl mx-auto mb-8">Convert, edit, merge, compress, and translate your files instantly — all online, all free.</p>
             
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <a href="#tools-grid" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-base sm:text-lg py-3 px-6 sm:px-8 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.05]">
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+                <a href="#tools-grid" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-lg py-3 px-8 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.05]">
                     Convert Now
                 </a>
-                <a href="#tools-grid" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-extrabold text-base sm:text-lg py-3 px-6 sm:px-8 rounded-xl transition duration-300 shadow-md transform hover:scale-[1.05]">
+                <a href="#tools-grid" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-extrabold text-lg py-3 px-8 rounded-xl transition duration-300 shadow-md transform hover:scale-[1.05]">
                     Explore All Tools
                 </a>
             </div>
-            <div class="mt-6 sm:mt-8 h-32 sm:h-40 md:h-48 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 font-medium italic border border-dashed text-sm sm:text-base">
+            <div class="mt-8 h-20 sm:h-32 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 font-medium italic border border-dashed">
                 [Illustration of files transforming into different formats here]
             </div>
         </section>
 
-        <!-- Tools Grid -->
-        <h2 class="text-3xl sm:text-4xl md:text-4xl font-black text-gray-900 mb-10 border-b-4 border-blue-500 pb-3 max-w-5xl mx-auto text-center">Explore Our Tools</h2>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-8 border-b-4 border-blue-500 pb-3 max-w-5xl mx-auto text-center">Explore Our Tools</h2>
         
-        <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
-            <!-- Tools Cards -->
-            <!-- Repeat your existing converter-card divs here, no changes except gap and responsive text if needed -->
+        <div id="tools-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+            
+            <div id="tool-pdf-to-word" data-route="/pdf-to-word" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-red-500">📄</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to Word</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Convert PDFs into fully editable DOCX files.</p>
+                <button onclick="openModal('tool-pdf-to-word')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+            
+            <div id="tool-word-to-pdf" data-route="/word-to-pdf" data-input-ext=".docx, .doc" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-green-500">📄</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Word to PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Turn DOC/DOCX files into PDF format.</p>
+                <button onclick="openModal('tool-word-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-pdf-to-jpg" data-route="/pdf-to-jpg" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-yellow-500">🖼️</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to JPG</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Convert PDF pages into high-quality JPG images.</p>
+                <button onclick="openModal('tool-pdf-to-jpg')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-jpg-to-pdf" data-route="/jpg-to-pdf" data-input-ext=".jpg, .jpeg, .png, .gif" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-purple-500">🖼️</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">JPG/PNG to PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Combine JPG, PNG, GIF images into a single PDF.</p>
+                <button onclick="openModal('tool-jpg-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+            
+            <div id="tool-pdf-to-ppt" data-route="/pdf-to-ppt" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-orange-500">📊</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to PPT</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Convert PDFs into editable PowerPoint presentations (PPTX).</p>
+                <button onclick="openModal('tool-pdf-to-ppt')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-pdf-to-excel" data-route="/pdf-to-excel" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-emerald-500">📈</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to Excel</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Extract tables and data from PDFs into XLSX.</p>
+                <button onclick="openModal('tool-pdf-to-excel')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+            
+            <div id="tool-excel-to-pdf" data-route="/excel-to-pdf" data-input-ext=".xlsx, .xls" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-red-700">📈</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Excel to PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Turn spreadsheets into secure PDF files.</p>
+                <button onclick="openModal('tool-excel-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-pdf-to-image" data-route="/pdf-to-image" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-sky-500">📸</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to PNG</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Generate crisp PNG images from PDF pages.</p>
+                <button onclick="openModal('tool-pdf-to-image')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+            
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto mt-6">
+            <div id="tool-image-to-pdf" data-route="/image-to-pdf" data-input-ext=".jpg, .jpeg, .png, .gif" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-indigo-500">📸</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Image to PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Create PDFs from multiple image files.</p>
+                <button onclick="openModal('tool-image-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-pdf-translate" data-route="/pdf-translate" data-input-ext=".pdf" class="converter-card bg-gray-100 p-4 sm:p-6 rounded-xl shadow-inner flex flex-col items-start opacity-70 cursor-not-allowed border-gray-300 col-span-2 sm:col-span-1">
+                <span class="text-2xl sm:text-3xl mb-2 text-gray-600">📄➡️🗣️</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-700 mb-1 sm:mb-2">PDF Translation</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Translate PDFs instantly into any language.</p>
+                <button disabled class="mt-auto w-full bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg shadow-md text-sm">Stay Tuned</button>
+            </div>
         </div>
 
-        <!-- Other sections (Why Tranvetro, Privacy, Testimonials, Coming Soon) -->
-        <!-- Add responsive paddings and text sizes similar to hero section -->
-        <!-- Example: -->
-        <section class="mt-12 sm:mt-16 bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-l-8 border-blue-500 max-w-5xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl md:text-3xl font-black text-gray-900 mb-6 text-center">Why Tranvetro is the Best Choice</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-left">
-                <!-- Cards -->
+        <section class="mt-16 bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-l-8 border-blue-500 max-w-5xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl font-black text-gray-900 mb-8 text-center">Why Tranvetro is the Best Choice</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 text-left">
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <span class="text-xl text-blue-600">✅</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Fast & Simple</h3>
+                        <p class="text-sm text-gray-600">Convert files in just a few clicks.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <span class="text-xl text-blue-600">🔒</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Secure & Private</h3>
+                        <p class="text-sm text-gray-600">Files encrypted and auto-deleted after 2 hours.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <span class="text-xl text-blue-600">💻</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">No Installation Required</h3>
+                        <p class="text-sm text-gray-600">Works on any device, anywhere.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <span class="text-xl text-blue-600">✨</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">High Quality</h3>
+                        <p class="text-sm text-gray-600">Preserves layout, fonts, and formatting.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <span class="text-xl text-blue-600">💰</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Free & Reliable</h3>
+                        <p class="text-sm text-gray-600">Premium features with zero hidden costs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-16 bg-blue-50 p-6 sm:p-10 rounded-2xl shadow-xl max-w-5xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl font-black text-gray-900 mb-8 text-center">What Our Users Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
+                    <p class="text-xl font-extrabold text-yellow-500 mb-2">⭐⭐⭐⭐⭐</p>
+                    <p class="text-gray-700 italic mb-3">“Super easy to use and lightning fast!”</p>
+                    <p class="font-semibold text-gray-800">— John D., USA</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
+                    <p class="text-xl font-extrabold text-yellow-500 mb-2">⭐⭐⭐⭐</p>
+                    <p class="text-gray-700 italic mb-3">“Converted my PDF in seconds. Excellent platform.”</p>
+                    <p class="font-semibold text-gray-800">— Priya K., India</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
+                    <p class="text-xl font-extrabold text-yellow-500 mb-2">⭐⭐⭐⭐⭐</p>
+                    <p class="text-gray-700 italic mb-3">“Tranvetro makes file conversions effortless!”</p>
+                    <p class="font-semibold text-gray-800">— Ahmed S., UAE</p>
+                </div>
             </div>
         </section>
         
-        <!-- Repeat the same mobile-first responsive tweaks for remaining sections -->
-        
-    </main>
+        </main>
 
-    <!-- Modal -->
     <div id="conversion-modal" class="fixed inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-3xl w-full max-w-lg p-6 sm:p-8 transform transition-all duration-300 scale-100 border-t-4 border-blue-500">
+        <div class="bg-white rounded-2xl shadow-3xl w-full max-w-md p-6 sm:p-8 transform transition-all duration-300 scale-100 border-t-4 border-blue-500">
             <h3 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-blue-800 mb-5 border-b pb-2">Convert Your File</h3>
+            
             <form id="upload-form" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="conversion_route" id="conversion-route">
+
                 <label for="file-upload" class="upload-area block w-full p-8 sm:p-12 mb-6 text-center rounded-xl transition duration-300">
-                    <svg class="w-12 h-12 mx-auto text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"></path></svg>
-                    <p class="mt-3 text-lg text-gray-700 font-extrabold">Click or Drag to Upload File</p>
+                    <svg class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"></path></svg>
+                    <p class="mt-2 sm:mt-3 text-lg text-gray-700 font-extrabold">Click or Drag to Upload File</p>
                     <p id="allowed-formats" class="text-sm text-gray-600 mt-2 font-medium"></p>
                 </label>
                 <input type="file" name="file" id="file-upload" class="hidden" required>
+                
                 <div id="file-status" class="mb-4 text-center hidden p-3 bg-blue-100 rounded-xl border border-blue-400">
                     <p class="text-base text-gray-800 font-bold">Selected File: <span id="file-name" class="font-extrabold text-blue-900"></span></p>
                 </div>
+                
                 <div id="progress-area" class="hidden text-center p-4 bg-yellow-100 rounded-xl border border-yellow-400 shadow-md">
                     <div class="w-12 h-12 border-4 border-gray-300 border-t-4 border-blue-700 border-solid rounded-full loader mx-auto mb-3"></div>
                     <p class="text-yellow-900 font-extrabold text-lg">Converting... Please wait.</p>
                 </div>
+
                 <div id="message-box" class="mt-5 p-4 rounded-xl text-md hidden font-extrabold" role="alert"></div>
-                <div class="flex flex-col sm:flex-row justify-end gap-4 mt-6 sm:mt-8">
-                    <button type="button" onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-md">Close</button>
-                    <button type="submit" id="convert-button" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.05]">Convert</button>
+
+                <div class="flex justify-end space-x-4 mt-8">
+                    <button type="button" onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-md">
+                        Close
+                    </button>
+                    <button type="submit" id="convert-button" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.05]">
+                        Convert
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full max-w-7xl py-6 sm:py-8 px-4 sm:px-6 bg-gray-900 text-white rounded-t-xl shadow-inner text-sm sm:text-base">
-        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-gray-700 pb-6 mb-6">
+    <footer class="w-full max-w-7xl py-8 mt-16 px-4 bg-gray-900 text-white rounded-t-xl shadow-inner">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-6 mb-6">
             <div class="col-span-2 md:col-span-1">
                 <h3 class="text-2xl font-black text-white mb-3">Tranverto</h3>
-                <p class="text-sm sm:text-base text-gray-400">Smart, secure, and free file conversion for everyone.</p>
+                <p class="text-sm text-gray-400">Smart, secure, and free file conversion for everyone.</p>
             </div>
             <div>
                 <h4 class="font-bold text-blue-400 mb-3">Quick Links</h4>
-                <ul class="space-y-2 text-sm sm:text-base text-gray-400">
+                <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="#" class="hover:text-blue-500">Home</a></li>
                     <li><a href="#tools-grid" class="hover:text-blue-500">Tools</a></li>
                     <li><a href="#" class="hover:text-blue-500">About</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Contact</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="font-bold text-blue-400 mb-3">Legal</h4>
-                <ul class="space-y-2 text-sm sm:text-base text-gray-400">
+                <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="#" class="hover:text-blue-500">FAQ</a></li>
                     <li><a href="#" class="hover:text-blue-500">Privacy Policy</a></li>
                     <li><a href="#" class="hover:text-blue-500">Contact</a></li>
@@ -174,7 +329,8 @@
                 </div>
             </div>
         </div>
-        <p class="text-center text-sm sm:text-base text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
+        
+        <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
     </footer>
 
     <script>
@@ -188,7 +344,15 @@
         const progressArea = document.getElementById('progress-area');
         const messageBox = document.getElementById('message-box');
         const convertButton = document.getElementById('convert-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Toggle Mobile Menu
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
         
+        // Modal functions (Unchanged logic)
         function openModal(toolId) {
             const toolElement = document.getElementById(toolId);
             if (!toolElement) return;
@@ -200,7 +364,7 @@
             convertButton.disabled = false;
             convertButton.textContent = 'Convert'; 
             convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
-            convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
+            convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl'); // Color update
 
             const toolTitle = toolElement.querySelector('h3').textContent; 
             const inputExt = toolElement.getAttribute('data-input-ext');
@@ -232,6 +396,7 @@
             }
         });
 
+        // Form Submission (Unchanged logic, just class names updated)
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (fileUpload.files.length === 0) {
@@ -239,7 +404,9 @@
                 return;
             }
 
+            // Loading state setup
             progressArea.classList.remove('hidden');
+            fileStatus.classList.add('hidden');
             messageBox.classList.add('hidden');
             convertButton.disabled = true;
             convertButton.textContent = 'Converting...'; 
@@ -254,6 +421,7 @@
                 const response = await fetch(route, { method: 'POST', body: formData });
                 
                 if (response.ok && response.headers.get('Content-Type') && response.headers.get('Content-Type').includes('application')) {
+                    // Success handling (file download logic)
                     const blob = await response.blob();
                     let downloadName = 'converted_file';
                     const disposition = response.headers.get('Content-Disposition');
@@ -282,3 +450,26 @@
                 console.error("Fetch Error:", error);
                 showMessage(`Network Error: Failed to reach the server.`, 'error'); 
             } finally {
+                // Reset loading state
+                progressArea.classList.add('hidden');
+                convertButton.disabled = false;
+                convertButton.textContent = 'Convert'; 
+                convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
+                convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
+            }
+        });
+
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-red-50', 'text-red-800', 'border', 'border-red-300', 'border-green-300');
+            
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-300');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-300');
+            }
+            messageBox.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
