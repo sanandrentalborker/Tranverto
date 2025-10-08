@@ -3,56 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Tranverto</title>
+    <title>About Us – Tranverto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+    </style>
 </head>
-<body class="bg-[#f7f9fc] min-h-screen flex flex-col items-center font-['Inter']">
+<body class="min-h-screen flex flex-col items-center">
 
-    <header class="w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
+    <header class="header-sticky w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
         <div class="flex items-center space-x-3">
             <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
         </div>
-        <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
+        
+        <nav class="hidden lg:flex space-x-6 text-gray-600 font-semibold">
             <a href="/" class="hover:text-blue-600">Home</a>
-            <a href="/about.html" class="hover:text-blue-600">About</a>
+            <a href="/#tools-grid" class="hover:text-blue-600">Tools</a>
+            <a href="/about.html" class="text-blue-600 font-bold">About</a>
             <a href="/contact.html" class="hover:text-blue-600">Contact</a>
         </nav>
-        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden sm:block">
+        
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden md:block">
             Convert Now
         </a>
     </header>
 
-    <main class="w-full max-w-5xl flex-grow px-4 mt-8">
-        <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
-            <h2 class="text-4xl font-black text-gray-900 mb-6 border-b pb-3 text-center">About Tranverto: Our Mission</h2>
+    <main class="w-full max-w-7xl flex-grow px-4 mt-8">
+        <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
+            <h2 class="text-5xl font-black text-gray-900 mb-4 text-center">Our Story: Why Tranverto?</h2>
+            <p class="text-xl text-gray-600 mb-10 text-center">Making file conversion easy, accessible, and secure for everyone.</p>
             
-            <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                Tranverto ki shuruat ek simple vision ke saath hui thi: **File conversion ko har kisi ke liye asaan aur 100% safe banana.** Hum jaante hain ki file formats ke saath deal karna kitna mushkil ho sakta hai, aur humne ek aisi platform banaya hai jo is process ko **fast, reliable, aur privacy-focused** banata hai.
-            </p>
-
-            <div class="grid md:grid-cols-2 gap-8 mt-10">
-                <div class="p-6 bg-blue-50 rounded-xl shadow-md border-t-2 border-blue-400">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Our Core Values</h3>
-                    <ul class="list-disc list-inside space-y-2 text-gray-700">
-                        <li>**Privacy First:** Hum aapka koi personal data save nahi karte.</li>
-                        <li>**Speed & Efficiency:** Conversion kuch hi seconds mein ho jaata hai.</li>
-                        <li>**Quality:** Output file ki quality hamesha original file ke barabar ya usse behtar hoti hai.</li>
-                        <li>**Free for All:** Premium tools sabhi ke liye muft mein upalabdh hain.</li>
-                    </ul>
-                </div>
-                <div class="p-6 bg-blue-50 rounded-xl shadow-md border-t-2 border-blue-400">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Technology & Security</h3>
-                    <p class="text-gray-700">
-                        Hum cutting-edge server technology ka upyog karte hain taaki aapki conversion process tezi se ho. Hamara server **256-bit SSL encryption** se secure hai, aur sabse zaroori, hum **do ghante ke andar** aapki files automatically delete kar dete hain taaki aapka kaam puri tarah confidential rahe.
+            <div class="space-y-8">
+                
+                <section>
+                    <h3 class="text-3xl font-extrabold text-blue-700 mb-3 border-b pb-2 border-blue-100">The Problem We Solved</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        We started Tranverto because we were tired of complicated, slow, and expensive online conversion tools. Many existing services either bombard users with ads, compromise file security, or require complex software installations. Our goal was simple: **create a free, fast, and secure platform** that handles all your conversion needs without any hassle.
                     </p>
-                </div>
-            </div>
+                </section>
 
-            <p class="mt-10 text-center text-xl font-semibold text-blue-600">
-                Join thousands of users who trust Tranverto for smart, secure file management.
-            </p>
-            
+                <section class="p-6 bg-gray-50 rounded-xl shadow-inner border-l-4 border-blue-400">
+                    <h3 class="text-3xl font-extrabold text-gray-800 mb-3">Our Mission and Values</h3>
+                    <ul class="space-y-3 text-gray-700 list-disc pl-6">
+                        <li>**Simplicity:** We design our tools to be intuitive. Upload, convert, download—that's it.</li>
+                        <li>**Security:** We never store your files. All uploads are deleted automatically after conversion, ensuring your data remains private.</li>
+                        <li>**Accessibility:** Tranverto is completely free and works on any device and operating system, making powerful tools available to everyone.</li>
+                        <li>**Speed:** We use advanced cloud technology to ensure your file conversions are completed in seconds, not minutes.</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h3 class="text-3xl font-extrabold text-blue-700 mb-3 border-b pb-2 border-blue-100">Our Technology</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Tranverto is built using modern, efficient, and scalable technologies, allowing us to support a vast range of file formats, from common PDFs and images to specialized documents. While we are currently hosted on platforms like GitHub Pages, our backend utilizes robust Python code to handle the conversion logic, ensuring high-quality output every time.
+                    </p>
+                </section>
+
+                <section class="text-center pt-6 border-t border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Join Our Journey</h3>
+                    <p class="text-gray-600 mb-4">
+                        We are constantly working to add new tools and improve our service. Thank you for choosing Tranverto for your file conversion needs!
+                    </p>
+                    <a href="/#tools-grid" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+                        Start Converting Files Now
+                    </a>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -88,7 +113,9 @@
                 </div>
             </div>
         </div>
+        
         <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
     </footer>
+
 </body>
 </html>
