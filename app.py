@@ -3,6 +3,7 @@ import io
 import os
 import requests
 import time
+import json
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
@@ -33,7 +34,7 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     }
 
     if extra_options:
-        fields["options"] = extra_options
+        fields["options"] = json.dumps(extra_options)
 
     multipart_data = MultipartEncoder(fields=fields)
     headers["Content-Type"] = multipart_data.content_type
