@@ -6,57 +6,98 @@
     <title>FAQ – Tranverto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .faq-item {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .faq-item[aria-expanded="true"] .faq-answer {
+            max-height: 500px; /* Adjust this value if content is long */
+            transition: max-height 0.4s ease-in;
+        }
+    </style>
 </head>
-<body class="bg-[#f7f9fc] min-h-screen flex flex-col items-center font-['Inter']">
+<body class="min-h-screen flex flex-col items-center">
 
-    <header class="w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
+    <header class="header-sticky w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
         <div class="flex items-center space-x-3">
             <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
         </div>
-        <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
+        
+        <nav class="hidden lg:flex space-x-6 text-gray-600 font-semibold">
             <a href="/" class="hover:text-blue-600">Home</a>
+            <a href="/#tools-grid" class="hover:text-blue-600">Tools</a>
             <a href="/about.html" class="hover:text-blue-600">About</a>
             <a href="/contact.html" class="hover:text-blue-600">Contact</a>
         </nav>
-        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden sm:block">
+        
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden md:block">
             Convert Now
         </a>
     </header>
 
-    <main class="w-full max-w-5xl flex-grow px-4 mt-8">
-        <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
-            <h2 class="text-4xl font-black text-gray-900 mb-8 border-b pb-3 text-center">Frequently Asked Questions (FAQ)</h2>
+    <main class="w-full max-w-7xl flex-grow px-4 mt-8">
+        <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
+            <h2 class="text-5xl font-black text-gray-900 mb-4 text-center">Frequently Asked Questions (FAQ)</h2>
+            <p class="text-xl text-gray-600 mb-10 text-center">Find quick answers to the most common questions about our service.</p>
             
-            <div class="space-y-6">
-                <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Q: Kya meri files secure hain?</h3>
-                    <p class="text-gray-700">
-                        A: Haan, bilkul! Hum **256-bit SSL encryption** ka upyog karte hain. Sabse important baat, hum aapki files ko conversion ke baad **2 ghante ke andar** automatically permanent delete kar dete hain. Hum koi backup nahi rakhte.
-                    </p>
-                </div>
+            <div class="space-y-4">
                 
-                <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Q: Tranverto ko use karne ka kya charge hai?</h3>
-                    <p class="text-gray-700">
-                        A: Tranverto puri tarah **muft (free)** hai. Aap unlimited conversions bina kisi hidden cost ya subscription ke kar sakte hain.
-                    </p>
-                </div>
-                
-                <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Q: Kya aap users ka data collect karte hain?</h3>
-                    <p class="text-gray-700">
-                        A: **Nahi.** Hamara core principle **Zero-Data Collection** hai. Hum aapka email, naam, ya koi personal jaankari save nahi karte. Aap jo file upload karte hain, woh sirf conversion ke liye use hoti hai aur phir delete kar di jaati hai.
-                    </p>
+                <div class="faq-item bg-gray-50 border border-gray-200 rounded-lg shadow-md" onclick="toggleAnswer(this)" aria-expanded="false">
+                    <div class="p-5 flex justify-between items-center">
+                        <h4 class="text-lg font-semibold text-gray-800">1. Is Tranverto completely free to use?</h4>
+                        <svg class="w-5 h-5 text-blue-600 transform rotate-0 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="p-5 pt-0 text-gray-600 border-t border-gray-200">Yes, Tranverto is 100% free. We offer high-quality file conversion tools without any hidden costs, subscriptions, or limitations on use.</p>
+                    </div>
                 </div>
 
-                <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Q: Kya main mobile phone ya tablet par use kar sakta hoon?</h3>
-                    <p class="text-gray-700">
-                        A: Haan. Tranverto ek **online tool** hai aur yeh mobile, tablet, aur PC **sabhi devices** par smoothly aur attractive tarike se kaam karta hai. Koi software install karne ki zaroorat nahi hai.
-                    </p>
+                <div class="faq-item bg-gray-50 border border-gray-200 rounded-lg shadow-md" onclick="toggleAnswer(this)" aria-expanded="false">
+                    <div class="p-5 flex justify-between items-center">
+                        <h4 class="text-lg font-semibold text-gray-800">2. Are my uploaded files secure?</h4>
+                        <svg class="w-5 h-5 text-blue-600 transform rotate-0 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="p-5 pt-0 text-gray-600 border-t border-gray-200">Absolutely. Your files are automatically **deleted from our servers immediately** after conversion and download. We do not store, view, or share your content.</p>
+                    </div>
                 </div>
+
+                <div class="faq-item bg-gray-50 border border-gray-200 rounded-lg shadow-md" onclick="toggleAnswer(this)" aria-expanded="false">
+                    <div class="p-5 flex justify-between items-center">
+                        <h4 class="text-lg font-semibold text-gray-800">3. Which file formats do you support?</h4>
+                        <svg class="w-5 h-5 text-blue-600 transform rotate-0 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="p-5 pt-0 text-gray-600 border-t border-gray-200">We primarily focus on popular document and image conversions, such as **PDF to DOC, JPG to PNG, and more**. We are constantly working to add more formats based on user demand.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-50 border border-gray-200 rounded-lg shadow-md" onclick="toggleAnswer(this)" aria-expanded="false">
+                    <div class="p-5 flex justify-between items-center">
+                        <h4 class="text-lg font-semibold text-gray-800">4. Do I need to register or install software?</h4>
+                        <svg class="w-5 h-5 text-blue-600 transform rotate-0 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="p-5 pt-0 text-gray-600 border-t border-gray-200">No. Tranverto is entirely web-based. There is **no need to sign up or download any software**—just upload your file and convert it directly in your browser.</p>
+                    </div>
+                </div>
+
             </div>
-            
         </div>
     </main>
 
@@ -92,7 +133,35 @@
                 </div>
             </div>
         </div>
+        
         <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
     </footer>
+
+    <script>
+        function toggleAnswer(element) {
+            const answer = element.querySelector('.faq-answer');
+            const icon = element.querySelector('svg');
+            const isExpanded = element.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                element.setAttribute('aria-expanded', 'false');
+                answer.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Collapse all others
+                document.querySelectorAll('.faq-item[aria-expanded="true"]').forEach(item => {
+                    item.setAttribute('aria-expanded', 'false');
+                    item.querySelector('.faq-answer').style.maxHeight = '0';
+                    item.querySelector('svg').style.transform = 'rotate(0deg)';
+                });
+
+                // Expand current one
+                element.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = answer.scrollHeight + 'px'; // Set to actual height
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+
 </body>
 </html>
