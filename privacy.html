@@ -6,59 +6,73 @@
     <title>Privacy Policy – Tranverto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+    </style>
 </head>
-<body class="bg-[#f7f9fc] min-h-screen flex flex-col items-center font-['Inter']">
+<body class="min-h-screen flex flex-col items-center">
 
-    <header class="w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
+    <header class="header-sticky w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
         <div class="flex items-center space-x-3">
             <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
         </div>
-        <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
+        
+        <nav class="hidden lg:flex space-x-6 text-gray-600 font-semibold">
             <a href="/" class="hover:text-blue-600">Home</a>
+            <a href="/#tools-grid" class="hover:text-blue-600">Tools</a>
             <a href="/about.html" class="hover:text-blue-600">About</a>
             <a href="/contact.html" class="hover:text-blue-600">Contact</a>
         </nav>
-        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden sm:block">
+        
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden md:block">
             Convert Now
         </a>
     </header>
 
-    <main class="w-full max-w-5xl flex-grow px-4 mt-8">
-        <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
-            <h2 class="text-4xl font-black text-gray-900 mb-6 border-b pb-3">Our Commitment to Privacy</h2>
-            <p class="text-gray-600 mb-8 text-lg">
-                Tranverto is designed around **complete user anonymity and data minimization**. We believe that file conversion should be fast, easy, and above all, private.
-            </p>
+    <main class="w-full max-w-7xl flex-grow px-4 mt-8">
+        <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
+            <h2 class="text-5xl font-black text-gray-900 mb-4 text-center">Privacy Policy</h2>
+            <p class="text-sm text-gray-500 mb-8 text-center">Last Updated: October 8, 2025</p>
+            
+            <div class="space-y-6 text-gray-700">
+                
+                <p class="leading-relaxed">
+                    At **Tranverto**, your privacy is our top priority. This policy explains how we handle the information you provide while using our services.
+                </p>
 
-            <div class="space-y-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-blue-700 mb-3">1. Data Collection Policy (Zero Data)</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        हम किसी भी यूजर का **कोई भी व्यक्तिगत डेटा (Personal Data)** जैसे नाम, ईमेल, या IP Address **collect नहीं करते हैं** और न ही सेव करते हैं। जब आप अपनी फाइल अपलोड करते हैं, तो उसे केवल conversion process के लिए इस्तेमाल किया जाता है और उसके बाद तुरंत हटा दिया जाता है।
-                    </p>
-                </div>
+                <h3 class="text-2xl font-bold text-blue-700 pt-4 border-t border-blue-100">1. Data Security and File Handling</h3>
+                <ul class="space-y-3 list-disc pl-6">
+                    <li>**No File Storage:** We do not permanently store your uploaded or converted files. Files are processed in temporary memory and are **automatically deleted immediately** after the conversion is complete and you download the file, or if you close the conversion page.</li>
+                    <li>**Processing:** File processing happens in a secure, isolated environment.</li>
+                    <li>**No Tracking:** We do not track the content of your files.</li>
+                </ul>
+                
+                <h3 class="text-2xl font-bold text-blue-700 pt-4 border-t border-blue-100">2. Information We Collect</h3>
+                <ul class="space-y-3 list-disc pl-6">
+                    <li>**Usage Data:** We may collect non-personal information such as your browser type, device type, and the pages you visit. This helps us improve our service. This data is collected using standard analytics tools (like Google Analytics, if implemented).</li>
+                    <li>**No Personal Identifiable Information (PII):** Since you do not create an account or provide registration details, we do not collect names, addresses, or other personally identifiable information through the conversion process.</li>
+                </ul>
 
-                <div>
-                    <h3 class="text-2xl font-bold text-blue-700 mb-3">2. File Retention Policy</h3>
-                    <div class="bg-red-50 border-l-4 border-red-500 p-4 shadow-inner">
-                        <p class="font-extrabold text-xl text-red-800">
-                            🔒 **ALL UPLOADED FILES ARE AUTOMATICALLY DELETED AFTER 2 HOURS.**
-                        </p>
-                        <p class="text-red-700 mt-2">
-                            Aapki files, conversion complete hone aur download link milne ke 2 ghante baad, hamare servers se **permanently delete** kar di jati hain. Ham unka koi backup nahi rakhte.
-                        </p>
-                    </div>
-                </div>
+                <h3 class="text-2xl font-bold text-blue-700 pt-4 border-t border-blue-100">3. Third-Party Links</h3>
+                <p class="leading-relaxed">
+                    Our website may contain links to other sites (like social media or external resources). Please be aware that we are not responsible for the privacy practices of these other sites.
+                </p>
+                
+                <h3 class="text-2xl font-bold text-blue-700 pt-4 border-t border-blue-100">4. Contact Us</h3>
+                <p class="leading-relaxed">
+                    If you have any questions about this Privacy Policy, please contact us at:
+                    <a href="mailto:tranverto@gmail.com" class="text-blue-600 font-semibold hover:underline">tranverto@gmail.com</a>
+                </p>
 
-                <div>
-                    <h3 class="text-2xl font-bold text-blue-700 mb-3">3. Data Security</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        Aapki privacy aur files ki security hamari sabse badi priority hai. Conversion ke dauraan, aapka data **256-bit SSL encryption** se protected rehta hai, jisse yeh sunischit hota hai ki koi teesra vyakti aapki files ko access nahi kar sakta.
-                    </p>
-                </div>
             </div>
-
-            <p class="mt-10 text-sm text-gray-500 text-center">Last Updated: October 2025</p>
         </div>
     </main>
 
@@ -94,7 +108,9 @@
                 </div>
             </div>
         </div>
+        
         <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
     </footer>
+
 </body>
 </html>
