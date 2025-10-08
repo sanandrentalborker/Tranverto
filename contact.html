@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us – Tranverto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .form-input {
+            transition: all 0.3s;
+            border-color: #d1d5db; /* gray-300 */
+        }
+        .form-input:focus {
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+    <header class="header-sticky w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
+        <div class="flex items-center space-x-3">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
+        </div>
+        
+        <nav class="hidden lg:flex space-x-6 text-gray-600 font-semibold">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <a href="/#tools-grid" class="hover:text-blue-600">Tools</a>
+            <a href="/about.html" class="hover:text-blue-600">About</a>
+            <a href="/contact.html" class="text-blue-600 font-bold">Contact</a>
+        </nav>
+        
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 hidden md:block">
+            Convert Now
+        </a>
+    </header>
+
+    <main class="w-full max-w-7xl flex-grow px-4 mt-8">
+        <div class="max-w-3xl mx-auto bg-white p-6 sm:p-10 rounded-2xl shadow-xl border-t-8 border-blue-500 mb-10">
+            <h2 class="text-4xl font-black text-gray-900 mb-4 text-center">Contact Us</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">Humein aapki madad karke khushi hogi. Neeche diye gaye tarikon se humse sampark karein.</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-6 bg-blue-50 rounded-xl shadow-inner">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">Contact Info</h3>
+                    <div class="space-y-4 text-gray-700">
+                        <p class="flex items-center">
+                            <span class="text-blue-600 mr-3">📧</span>
+                            <span class="font-semibold">Email:</span> <a href="mailto:support@tranverto.com" class="hover:underline ml-2">support@tranverto.com</a>
+                        </p>
+                        <p class="flex items-center">
+                            <span class="text-blue-600 mr-3">🕒</span>
+                            <span class="font-semibold">Support Hours:</span> 24/7 (We respond within 24 hours)
+                        </p>
+                        <p class="text-sm pt-4 border-t border-blue-200">
+                            **Note:** Apni file security ke liye, hum **online contact form** nahi rakhte. Kripya **seedhe email** karein.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-gray-50 rounded-xl shadow-inner">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Send us a Message</h3>
+                    <p class="text-gray-700 mb-4">
+                        Kripya neeche diye gaye email address par **seedhe email** bhejkar humse sampark karein.
+                    </p>
+                    <a href="mailto:support@tranverto.com" class="w-full inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-300 shadow-xl transform hover:scale-[1.03]">
+                        Email Support Team Now
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer class="w-full max-w-7xl py-8 mt-16 px-4 bg-gray-900 text-white rounded-t-xl shadow-inner">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-6 mb-6">
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-2xl font-black text-white mb-3">Tranverto</h3>
+                <p class="text-sm text-gray-400">Smart, secure, and free file conversion for everyone.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-blue-400 mb-3">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="/" class="hover:text-blue-500">Home</a></li>
+                    <li><a href="/#tools-grid" class="hover:text-blue-500">Tools</a></li>
+                    <li><a href="/about.html" class="hover:text-blue-500">About</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-500">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-blue-400 mb-3">Legal</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="/faq.html" class="hover:text-blue-500">FAQ</a></li>
+                    <li><a href="/privacy.html" class="hover:text-blue-500">Privacy Policy</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-500">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-blue-400 mb-3">Connect</h4>
+                <div class="flex space-x-4 text-gray-400">
+                    <a href="#" class="hover:text-blue-500" aria-label="LinkedIn">🔗</a>
+                    <a href="#" class="hover:text-blue-500" aria-label="X (Twitter)">🐦</a>
+                    <a href="#" class="hover:text-blue-500" aria-label="YouTube">▶️</a>
+                </div>
+            </div>
+        </div>
+        
+        <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
+    </footer>
+
+</body>
+</html>
