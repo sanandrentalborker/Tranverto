@@ -38,38 +38,42 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
     multipart_data = MultipartEncoder(fields=fields)
     headers["Content-Type"] = multipart_data.content_type
 
-    try:
-        response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
-        print("DEBUG: Raw ConvertHub Response =", response.text)
+    for attempt in range(3):
+        try:
+            response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
+            print("DEBUG: Raw ConvertHub Response =", response.text)
+            break
+        except requests.exceptions.ConnectionError as e:
+            print(f"DEBUG: Connection error on attempt {attempt+1} — {e}")
+            time.sleep(2 ** attempt)
+    else:
+        return "नेटवर्क या API एरर: ConvertHub से कनेक्शन नहीं हो पाया।", 500
 
-        job = response.json()
-        if not job.get("success", False):
-            error_msg = job.get("error", {}).get("message", "Unknown error")
-            return f"कन्वर्ज़न एरर: ConvertHub ने job शुरू नहीं किया — {error_msg}", 500
+    job = response.json()
+    if not job.get("success", False):
+        error_msg = job.get("error", {}).get("message", "Unknown error")
+        return f"कन्वर्ज़न एरर: ConvertHub ने job शुरू नहीं किया — {error_msg}", 500
 
-        result = job.get("result", {})
-        file_url = result.get("download_url")
-        if job.get("status") == "completed" and file_url:
-            download_response = requests.get(file_url)
-            return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
+    result = job.get("result", {})
+    file_url = result.get("download_url")
+    if job.get("status") == "completed" and file_url:
+        download_response = requests.get(file_url)
+        return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
-        print("DEBUG: First attempt incomplete — retrying silently...")
-        time.sleep(10)
-        retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
-        retry_job = retry_response.json()
-        retry_url = retry_job.get("result", {}).get("download_url")
+    print("DEBUG: First attempt incomplete — retrying silently...")
+    time.sleep(10)
+    retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
+    retry_job = retry_response.json()
+    retry_url = retry_job.get("result", {}).get("download_url")
 
-        if retry_job.get("status") == "completed" and retry_url:
-            download_response = requests.get(retry_url)
-            return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
+    if retry_job.get("status") == "completed" and retry_url:
+        download_response = requests.get(retry_url)
+        return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
-        if output_format == "xlsx":
-            return "कन्वर्ज़न एरर: PDF में टेबल डेटा नहीं मिला या फॉर्मेट सपोर्ट नहीं किया गया।", 500
+    if output_format == "xlsx":
+        return "कन्वर्ज़न एरर: PDF में टेबल डेटा नहीं मिला या फॉर्मेट सपोर्ट नहीं किया गया।", 500
 
-        return "कन्वर्ज़न एरर: दोबारा कोशिश के बाद भी आउटपुट फाइल नहीं मिली।", 500
-
-    except Exception as e:
-        return f"नेटवर्क या API एरर: {str(e)}", 500
+    return "कन्वर्ज़न एरर: दोबारा कोशिश के बाद भी आउटपुट फाइल नहीं मिली।", 500
 
 # ✅ All Conversion Routes
 
