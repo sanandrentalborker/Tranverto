@@ -3,7 +3,6 @@ import io
 import os
 import requests
 import time
-import json
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
@@ -21,7 +20,6 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
 
     file_bytes = file_stream.read()
 
-    # ✅ File size check for free plan (5MB limit)
     if len(file_bytes) > 5 * 1024 * 1024:
         return "फाइल बहुत बड़ी है — फ्री प्लान में 5MB तक की फाइल सपोर्टेड है।", 400
 
@@ -29,11 +27,9 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         "Authorization": f"Bearer {api_key}"
     }
 
-    options_json = json.dumps(extra_options) if extra_options else ""
-
     multipart_data = MultipartEncoder(fields={
         "target_format": output_format,
-        "options": options_json,
+        "options": extra_options if extra_options else {},
         "file": (filename, file_bytes)
     })
 
