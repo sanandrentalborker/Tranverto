@@ -27,12 +27,15 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         "Authorization": f"Bearer {api_key}"
     }
 
-    multipart_data = MultipartEncoder(fields={
+    fields = {
         "target_format": output_format,
-        "options": extra_options if extra_options else {},
         "file": (filename, file_bytes)
-    })
+    }
 
+    if extra_options:
+        fields["options"] = extra_options
+
+    multipart_data = MultipartEncoder(fields=fields)
     headers["Content-Type"] = multipart_data.content_type
 
     try:
