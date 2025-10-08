@@ -11,24 +11,60 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f9fc; }
-        .converter-card { transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1); cursor: pointer; border: 1px solid #e5e7eb; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .converter-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(59,130,246,0.2); border-color: #3b82f6; }
-        .upload-area { border: 3px dashed #93c5fd; transition: border-color 0.3s, background-color 0.3s; background-color: #eff6ff; }
-        .upload-area:hover, .upload-area.dragover { border-color: #3b82f6; background-color: #dbeafe; }
-        .loader { border-top-color: #1d4ed8; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .svg-icon { fill: currentColor; width: 24px; height: 24px; }
+        /* Design Shift: Clean, Modern Look (Soft Blues & Whites) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc; /* Very light grey/blue background */
+        }
+        /* Converter Card Refinement */
+        .converter-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            border: 1px solid #e5e7eb; /* Subtle light border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
+        }
+        .converter-card:hover {
+            /* Clean lift with a touch of blue shadow */
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); /* Soft Blue Shadow */
+            border-color: #3b82f6; /* Blue border on hover */
+        }
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed #93c5fd; /* Light blue dashed border */
+            transition: border-color 0.3s, background-color 0.3s;
+            background-color: #eff6ff; /* Very light blue background */
+        }
+        .upload-area:hover {
+            border-color: #3b82f6; /* Blue border on hover */
+            background-color: #e0f2fe;
+        }
+        /* Loader remains Blue */
+        .loader {
+            border-top-color: #1d4ed8; 
+            -webkit-animation: spin 1s ease-in-out infinite;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Utility for Icons (if custom icons are used) */
+        .svg-icon {
+             fill: currentColor;
+             width: 24px;
+             height: 24px;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
     <header class="w-full max-w-7xl px-4 py-4 md:py-6 flex justify-between items-center bg-white rounded-b-xl shadow-lg border-b-4 border-blue-600">
         <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Tranvetro Logo" class="w-10 h-10 transform rotate-0" onerror="this.onerror=null;this.src='https://placehold.co/40x40/3b82f6/ffffff?text=TR'">
-            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">vetro</span></h1>
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Tranverto Logo" class="w-10 h-10 transform rotate-0" onerror="this.onerror=null;this.src='https://placehold.co/40x40/3b82f6/ffffff?text=TR'">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Tran<span class="text-blue-600">verto</span></h1>
         </div>
         <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
             <a href="#" class="hover:text-blue-600">Home</a>
@@ -56,7 +92,7 @@
                 </a>
             </div>
             <div class="mt-8 h-32 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 font-medium italic border border-dashed">
-                
+                [Illustration of files transforming into different formats here]
             </div>
         </section>
 
@@ -91,7 +127,7 @@
                 <p class="text-sm text-gray-600 mb-4 h-12">Combine JPG, PNG, GIF images into a single PDF.</p>
                 <button onclick="openModal('tool-jpg-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md">Convert Now</button>
             </div>
-
+            
             <div id="tool-pdf-to-ppt" data-route="/pdf-to-ppt" data-input-ext=".pdf" class="converter-card bg-white p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
                 <span class="text-3xl mb-3 text-orange-500">📊</span>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">PDF to PPT</h3>
@@ -120,6 +156,9 @@
                 <button onclick="openModal('tool-pdf-to-image')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md">Convert Now</button>
             </div>
             
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-6">
             <div id="tool-image-to-pdf" data-route="/image-to-pdf" data-input-ext=".jpg, .jpeg, .png, .gif" class="converter-card bg-white p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
                 <span class="text-3xl mb-3 text-indigo-500">📸</span>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Image to PDF</h3>
@@ -133,7 +172,6 @@
                 <p class="text-sm text-gray-600 mb-4 h-12">Translate PDFs instantly into any language.</p>
                 <button disabled class="mt-auto w-full bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg shadow-md">Stay Tuned</button>
             </div>
-            
         </div>
 
         <section class="mt-16 bg-white p-10 rounded-2xl shadow-xl border-l-8 border-blue-500 max-w-5xl mx-auto">
@@ -174,21 +212,14 @@
                         <p class="text-sm text-gray-600">Premium features with zero hidden costs.</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                    <span class="text-xl text-blue-600">🌐</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-800">Global Accessibility</h3>
-                        <p class="text-sm text-gray-600">Use on Windows, Mac, iOS, or Android.</p>
-                    </div>
-                </div>
             </div>
         </section>
 
         <section class="mt-16 text-center bg-gray-50 p-10 rounded-2xl shadow-inner max-w-5xl mx-auto">
             <h2 class="text-3xl font-black text-gray-900 mb-4">Your Privacy is Our Priority</h2>
             <div class="flex justify-center space-x-4 mb-4 text-blue-600">
-                <svg class="w-10 h-10 svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
-                <svg class="w-10 h-10 svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 18.98c-3.5-.83-6-4.24-6-8.98V6.3l6-2.5 6 2.5v4.7c0 4.74-2.5 8.15-6 8.98z"/><path d="M10.88 12.39L9 10.51l1.41-1.41 1.47 1.47 3.18-3.18L16.59 9l-4.2 4.2-1.51-1.41z"/></svg>
+                <svg class="w-10 h-10 svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 18.98c-3.5-.83-6-4.24-6-8.98V6.3l6-2.5 6 2.5v4.7c0 4.74-2.5 8.15-6 8.98z"/><path d="M16 10H8v1h8v-1zm0 2H8v1h8v-1zm-2 2H10v1h4v-1z"/></svg>
+                <svg class="w-10 h-10 svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6l-6 6 1.41 1.41L12 8.83l4.59 4.58L18 12l-6-6zM12 18h-.01c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
             </div>
             <p class="text-lg text-gray-700 font-medium">
                 All files are processed securely with **256-bit SSL encryption** and **deleted automatically after 2 hours**. Your data is safe, always.
@@ -226,8 +257,6 @@
                 Stay Updated
             </a>
         </section>
-        
-        <div class="mb-16"></div>
 
     </main>
 
@@ -292,16 +321,15 @@
             </div>
             <div>
                 <h4 class="font-bold text-blue-400 mb-3">Connect</h4>
-                <div class="flex space-x-4 text-gray-400 text-xl">
-                    <a href="#" class="hover:text-blue-500" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-500" aria-label="X (Twitter)"><i class="fab fa-twitter-square"></i></a>
-                    <a href="#" class="hover:text-blue-500" aria-label="YouTube"><i class="fab fa-youtube-square"></i></a>
+                <div class="flex space-x-4 text-gray-400">
+                    <a href="#" class="hover:text-blue-500" aria-label="LinkedIn">🔗</a>
+                    <a href="#" class="hover:text-blue-500" aria-label="X (Twitter)">🐦</a>
+                    <a href="#" class="hover:text-blue-500" aria-label="YouTube">▶️</a>
                 </div>
-                <p class="text-sm text-gray-400 mt-2">LinkedIn, X, YouTube</p>
             </div>
         </div>
         
-        <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Designed with 💙</p>
+        <p class="text-center text-sm text-gray-500">© 2025 Tranverto. All Rights Reserved. | Proudly Made for the Global Market.</p>
     </footer>
 
     <script>
@@ -315,116 +343,116 @@
         const progressArea = document.getElementById('progress-area');
         const messageBox = document.getElementById('message-box');
         const convertButton = document.getElementById('convert-button');
-
+        
+        // Modal functions (Unchanged)
         function openModal(toolId) {
             const toolElement = document.getElementById(toolId);
             if (!toolElement) return;
-            
-            // Reset modal state
-            fileUpload.value=''; 
-            fileStatus.classList.add('hidden'); 
-            progressArea.classList.add('hidden'); 
-            messageBox.classList.add('hidden');
-            convertButton.disabled=false; 
-            convertButton.textContent='Convert'; 
-            convertButton.classList.remove('bg-gray-400','cursor-not-allowed','shadow-none'); 
-            convertButton.classList.add('bg-blue-600','hover:bg-blue-700','shadow-xl');
 
-            const toolTitle = toolElement.querySelector('h3').textContent;
+            fileUpload.value = '';
+            fileStatus.classList.add('hidden');
+            progressArea.classList.add('hidden');
+            messageBox.classList.add('hidden');
+            convertButton.disabled = false;
+            convertButton.textContent = 'Convert'; 
+            convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
+            convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl'); // Color update
+
+            const toolTitle = toolElement.querySelector('h3').textContent; 
             const inputExt = toolElement.getAttribute('data-input-ext');
             
             modalTitle.textContent = toolTitle;
             allowedFormats.textContent = `Allowed Formats: ${inputExt.toUpperCase().split(',').join(', ')}`;
             fileUpload.setAttribute('accept', inputExt);
             document.getElementById('conversion-route').value = toolElement.getAttribute('data-route');
-            
-            modal.classList.remove('hidden'); 
-            modal.classList.add('flex'); 
-            document.body.classList.add('modal-open');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('modal-open'); 
         }
 
-        function closeModal() { 
-            modal.classList.add('hidden'); 
-            modal.classList.remove('flex'); 
-            messageBox.classList.add('hidden'); 
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            messageBox.classList.add('hidden');
             document.body.classList.remove('modal-open'); 
         }
 
-        fileUpload.addEventListener('change', (e)=>{ 
-            if(e.target.files.length>0){ 
-                fileNameDisplay.textContent=e.target.files[0].name; 
-                fileStatus.classList.remove('hidden'); 
-                messageBox.classList.add('hidden'); 
-            } else { 
-                fileStatus.classList.add('hidden'); 
-            } 
+        fileUpload.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.textContent = e.target.files[0].name;
+                fileStatus.classList.remove('hidden');
+                messageBox.classList.add('hidden');
+            } else {
+                fileStatus.classList.add('hidden');
+            }
         });
 
-        uploadForm.addEventListener('submit', async(e)=>{ 
-            e.preventDefault(); 
-            if(fileUpload.files.length===0){ 
-                showMessage('Please select a file to convert.','error'); 
-                return; 
+        // Form Submission (Unchanged logic, just class names updated)
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (fileUpload.files.length === 0) {
+                showMessage('Please select a file to convert.', 'error');
+                return;
             }
-            
+
             // Loading state setup
-            progressArea.classList.remove('hidden'); 
-            messageBox.classList.add('hidden'); 
-            convertButton.disabled=true; 
-            convertButton.textContent='Converting...'; 
-            convertButton.classList.remove('bg-blue-600','hover:bg-blue-700','shadow-xl'); 
-            convertButton.classList.add('bg-gray-400','cursor-not-allowed','shadow-none');
-            
-            const formData = new FormData(); 
-            formData.append('file', fileUpload.files[0]); 
-            const route=document.getElementById('conversion-route').value;
-            
-            try{ 
-                const response=await fetch(route,{method:'POST',body:formData});
+            progressArea.classList.remove('hidden');
+            messageBox.classList.add('hidden');
+            convertButton.disabled = true;
+            convertButton.textContent = 'Converting...'; 
+            convertButton.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
+            convertButton.classList.add('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
+
+            const formData = new FormData();
+            formData.append('file', fileUpload.files[0]);
+            const route = document.getElementById('conversion-route').value;
+
+            try {
+                const response = await fetch(route, { method: 'POST', body: formData });
                 
-                if(response.ok && response.headers.get('Content-Type') && response.headers.get('Content-Type').includes('application')) {
+                if (response.ok && response.headers.get('Content-Type') && response.headers.get('Content-Type').includes('application')) {
                     // Success handling (file download logic)
-                    const blob = await response.blob(); 
-                    let downloadName='converted_file'; 
-                    const disposition=response.headers.get('Content-Disposition');
+                    const blob = await response.blob();
+                    let downloadName = 'converted_file';
+                    const disposition = response.headers.get('Content-Disposition');
+                    if (disposition && disposition.indexOf('attachment') !== -1) {
+                        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                        const matches = filenameRegex.exec(disposition);
+                        if (matches != null && matches[1]) {
+                            downloadName = matches[1].replace(/['"]/g, '');
+                        }
+                    } 
                     
-                    if(disposition && disposition.indexOf('attachment')!==-1){ 
-                        const filenameRegex=/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/; 
-                        const matches=filenameRegex.exec(disposition); 
-                        if(matches!=null && matches[1]){ 
-                            downloadName=matches[1].replace(/['"]/g,''); 
-                        } 
-                    }
-                    
-                    const url = window.URL.createObjectURL(blob); 
-                    const a=document.createElement('a'); 
-                    a.style.display='none'; 
-                    a.href=url; 
-                    a.download=downloadName; 
-                    document.body.appendChild(a); 
-                    a.click(); 
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = downloadName;
+                    document.body.appendChild(a);
+                    a.click();
                     window.URL.revokeObjectURL(url);
-                    showMessage('Conversion successful! Your file is downloading.','success'); 
+                    showMessage('Conversion successful! Your file is downloading.', 'success'); 
                 } else {
                     const errorText = await response.text();
                     showMessage(`Conversion Error: Network or API Error: ${errorText || 'Unknown Server Error'}`, 'error'); 
                 }
-            } catch(error){ 
+            } catch (error) {
                 console.error("Fetch Error:", error);
                 showMessage(`Network Error: Failed to reach the server.`, 'error'); 
             } finally {
                 // Reset loading state
                 progressArea.classList.add('hidden');
-                convertButton.disabled=false; 
-                convertButton.textContent='Convert'; 
-                convertButton.classList.remove('bg-gray-400','cursor-not-allowed','shadow-none');
-                convertButton.classList.add('bg-blue-600','hover:bg-blue-700','shadow-xl');
+                convertButton.disabled = false;
+                convertButton.textContent = 'Convert'; 
+                convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
+                convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
             }
         });
 
         function showMessage(message, type) {
             messageBox.textContent = message;
-            messageBox.classList.remove('hidden', 'bg-red-50', 'text-red-800', 'bg-green-100', 'text-green-700');
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-red-50', 'text-red-800');
             
             if (type === 'error') {
                 messageBox.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-300');
