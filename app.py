@@ -4,6 +4,7 @@ import os
 import requests
 import time
 import json
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 app = Flask(__name__, static_url_path='', static_folder='.', template_folder='templates')
 
@@ -19,30 +20,33 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
         return "कन्वर्ज़न एरर: API key सेट नहीं है।", 500
 
     file_bytes = file_stream.read()
+
+    # ✅ File size check for free plan (5MB limit)
+    if len(file_bytes) > 5 * 1024 * 1024:
+        return "फाइल बहुत बड़ी है — फ्री प्लान में 5MB तक की फाइल सपोर्टेड है।", 400
+
     headers = {
         "Authorization": f"Bearer {api_key}"
     }
-    files = {
-        "file": (filename, file_bytes)
-    }
-    data = {
-        "target_format": output_format
-    }
 
-    if extra_options and isinstance(extra_options, dict):
-        data["options"] = json.dumps(extra_options)
+    options_json = json.dumps(extra_options) if extra_options else ""
+
+    multipart_data = MultipartEncoder(fields={
+        "target_format": output_format,
+        "options": options_json,
+        "file": (filename, file_bytes)
+    })
+
+    headers["Content-Type"] = multipart_data.content_type
 
     try:
-        response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
+        response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
         print("DEBUG: Raw ConvertHub Response =", response.text)
 
         job = response.json()
         if not job.get("success", False):
             error_msg = job.get("error", {}).get("message", "Unknown error")
             return f"कन्वर्ज़न एरर: ConvertHub ने job शुरू नहीं किया — {error_msg}", 500
-
-        job_id = job.get("job_id")
-        print("DEBUG: Job ID =", job_id)
 
         result = job.get("result", {})
         file_url = result.get("download_url")
@@ -51,8 +55,8 @@ def convert_file_rest_api(file_stream, filename, output_format, mimetype, downlo
             return send_file(io.BytesIO(download_response.content), as_attachment=True, mimetype=mimetype, download_name=download_name)
 
         print("DEBUG: First attempt incomplete — retrying silently...")
-        time.sleep(5)
-        retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, files=files, data=data)
+        time.sleep(10)
+        retry_response = requests.post("https://api.converthub.com/v2/convert", headers=headers, data=multipart_data)
         retry_job = retry_response.json()
         retry_url = retry_job.get("result", {}).get("download_url")
 
