@@ -22,8 +22,3 @@ body {
     margin: 0 auto;
     padding: 20px 0;
 }
-
-/* * IMPORTANT: All custom styles for .hero, .tool-card, .footer etc. 
- * have been removed as they are now fully controlled by Tailwind CSS 
- * and inline styles in your HTML file. This prevents conflicts and keeps the code clean.
- */
