@@ -1,6 +1,6 @@
 /*
  * Tranverto: Optimized Front-End CSS
- * Purpose: Provides a basic style foundation.
+ * Purpose: Provides a basic style foundation based on Tailwind conventions.
  * NOTE: All major visual styling (colors, shadows, layouts) is handled 
  * by Tailwind CSS utility classes directly in index.html.
  */
@@ -11,7 +11,7 @@ body {
     margin: 0;
     padding: 0;
     color: #1f2937; /* Tailwind gray-800 */
-    background-color: #f7f9fc; /* Tailwind gray-50 */
+    background-color: #f7f9fc; /* Tailwind gray-50 (Very light blue/grey) */
 }
 
 /* 2. Container Utility */
@@ -26,7 +26,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: 700;
-    color: #111827; /* Tailwind gray-900 */
+    color: #111827; /* Tailwind gray-900 (Darker text for headings) */
 }
 
 /* 4. Links */
