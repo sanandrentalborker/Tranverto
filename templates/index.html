@@ -150,20 +150,6 @@
                 <button onclick="openModal('tool-jpg-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
             </div>
             
-            <div id="tool-pdf-to-ppt" data-route="/pdf-to-ppt" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
-                <span class="text-2xl sm:text-3xl mb-2 text-orange-500">📊</span>
-                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to PPT</h3>
-                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Convert PDFs into editable PowerPoint presentations (PPTX).</p>
-                <button onclick="openModal('tool-pdf-to-ppt')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
-            </div>
-
-            <div id="tool-pdf-to-excel" data-route="/pdf-to-excel" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
-                <span class="text-2xl sm:text-3xl mb-2 text-emerald-500">📈</span>
-                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to Excel</h3>
-                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Extract tables and data from PDFs into XLSX.</p>
-                <button onclick="openModal('tool-pdf-to-excel')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
-            </div>
-            
             <div id="tool-excel-to-pdf" data-route="/excel-to-pdf" data-input-ext=".xlsx, .xls" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
                 <span class="text-2xl sm:text-3xl mb-2 text-red-700">📈</span>
                 <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Excel to PDF</h3>
@@ -171,6 +157,13 @@
                 <button onclick="openModal('tool-excel-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
             </div>
 
+            <div id="tool-ppt-to-pdf" data-route="/ppt-to-pdf" data-input-ext=".pptx, .ppt" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-orange-600">📊</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PPT to PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Convert PowerPoint files into a static PDF document.</p>
+                <button onclick="openModal('tool-ppt-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+            
             <div id="tool-pdf-to-image" data-route="/pdf-to-image" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
                 <span class="text-2xl sm:text-3xl mb-2 text-sky-500">📸</span>
                 <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">PDF to PNG</h3>
@@ -186,6 +179,13 @@
                 <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Image to PDF</h3>
                 <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Create PDFs from multiple image files.</p>
                 <button onclick="openModal('tool-image-to-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Convert Now</button>
+            </div>
+
+            <div id="tool-merge-pdf" data-route="/merge-pdf" data-input-ext=".pdf" class="converter-card bg-white p-4 sm:p-6 rounded-xl shadow-md flex flex-col items-start hover:shadow-lg">
+                <span class="text-2xl sm:text-3xl mb-2 text-pink-600">🔗</span>
+                <h3 class="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">Merge PDF</h3>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 h-auto sm:h-12">Combine multiple PDF files into one document.</p>
+                <button onclick="openModal('tool-merge-pdf')" class="mt-auto w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md text-sm">Merge Now</button>
             </div>
 
             <div id="tool-pdf-translate" data-route="/pdf-translate" data-input-ext=".pdf" class="converter-card bg-gray-100 p-4 sm:p-6 rounded-xl shadow-inner flex flex-col items-start opacity-70 cursor-not-allowed border-gray-300 col-span-2 sm:col-span-1">
@@ -269,7 +269,7 @@
 
                 <label for="file-upload" class="upload-area block w-full p-8 sm:p-12 mb-6 text-center rounded-xl transition duration-300">
                     <svg class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"></path></svg>
-                    <p class="mt-2 sm:mt-3 text-lg text-gray-700 font-extrabold">Click or Drag to Upload File</p>
+                    <p class="mt-2 sm:mt-3 text-lg text-gray-700 font-extrabold">Click or Drag to Upload File(s)</p>
                     <p id="allowed-formats" class="text-sm text-gray-600 mt-2 font-medium"></p>
                 </label>
                 <input type="file" name="file" id="file-upload" class="hidden" required>
@@ -352,7 +352,7 @@
             mobileMenu.classList.toggle('hidden');
         });
         
-        // Modal functions (Unchanged logic)
+        // Modal functions (Updated logic to handle multiple files for Merge PDF)
         function openModal(toolId) {
             const toolElement = document.getElementById(toolId);
             if (!toolElement) return;
@@ -368,11 +368,23 @@
 
             const toolTitle = toolElement.querySelector('h3').textContent; 
             const inputExt = toolElement.getAttribute('data-input-ext');
+            const route = toolElement.getAttribute('data-route');
             
             modalTitle.textContent = toolTitle;
             allowedFormats.textContent = `Allowed Formats: ${inputExt.toUpperCase().split(',').join(', ')}`;
             fileUpload.setAttribute('accept', inputExt);
-            document.getElementById('conversion-route').value = toolElement.getAttribute('data-route');
+            document.getElementById('conversion-route').value = route;
+
+            // Handle Merge PDF specific setup for multiple files
+            if (route === '/merge-pdf' || route === '/image-to-pdf' || route === '/jpg-to-pdf') {
+                fileUpload.setAttribute('multiple', 'multiple');
+                document.querySelector('.upload-area p:first-of-type').textContent = 'Click or Drag to Upload File(s)';
+                convertButton.textContent = 'Process'; // Change button text for merge/multi-file tools
+            } else {
+                fileUpload.removeAttribute('multiple');
+                document.querySelector('.upload-area p:first-of-type').textContent = 'Click or Drag to Upload File';
+                convertButton.textContent = 'Convert';
+            }
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -387,8 +399,13 @@
         }
 
         fileUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileNameDisplay.textContent = e.target.files[0].name;
+            const fileCount = e.target.files.length;
+            if (fileCount > 0) {
+                if (fileCount === 1) {
+                    fileNameDisplay.textContent = e.target.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = `${fileCount} files selected`;
+                }
                 fileStatus.classList.remove('hidden');
                 messageBox.classList.add('hidden');
             } else {
@@ -400,7 +417,7 @@
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (fileUpload.files.length === 0) {
-                showMessage('Please select a file to convert.', 'error');
+                showMessage('Please select file(s) to process.', 'error');
                 return;
             }
 
@@ -409,12 +426,14 @@
             fileStatus.classList.add('hidden');
             messageBox.classList.add('hidden');
             convertButton.disabled = true;
-            convertButton.textContent = 'Converting...'; 
+            convertButton.textContent = 'Processing...'; 
             convertButton.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
             convertButton.classList.add('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
 
             const formData = new FormData();
-            formData.append('file', fileUpload.files[0]);
+            for (let i = 0; i < fileUpload.files.length; i++) {
+                formData.append('files[]', fileUpload.files[i]); // Note: changed key to 'files[]' for multi-file support
+            }
             const route = document.getElementById('conversion-route').value;
 
             try {
@@ -441,7 +460,7 @@
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
-                    showMessage('Conversion successful! Your file is downloading.', 'success'); 
+                    showMessage('Process successful! Your file is downloading.', 'success'); 
                 } else {
                     const errorText = await response.text();
                     showMessage(`Conversion Error: Network or API Error: ${errorText || 'Unknown Server Error'}`, 'error'); 
@@ -456,6 +475,12 @@
                 convertButton.textContent = 'Convert'; 
                 convertButton.classList.remove('bg-gray-400', 'cursor-not-allowed', 'shadow-none');
                 convertButton.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-xl');
+                
+                // Reset button text specifically for merge/multi-file tools
+                const currentRoute = document.getElementById('conversion-route').value;
+                if (currentRoute === '/merge-pdf' || currentRoute === '/image-to-pdf' || currentRoute === '/jpg-to-pdf') {
+                    convertButton.textContent = 'Process'; 
+                }
             }
         });
 
